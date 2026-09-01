@@ -106,8 +106,8 @@ export const HomeDashboard: React.FC = () => {
       }`}
       style={{ backgroundColor: 'var(--menu-bg)', color: 'var(--menu-text-primary)' }}
     >
-      {/* GSAP TargetCursor HUD Bracket */}
-      <TargetCursor targetSelector=".cursor-target" spinDuration={6} />
+      {/* Dynamic TargetCursor HUD Bracket (White in DarkMode, Black in LightMode) */}
+      <TargetCursor targetSelector=".cursor-target" spinDuration={6} theme={theme} />
 
       {/* Top Application Header Bar */}
       <header
@@ -136,15 +136,17 @@ export const HomeDashboard: React.FC = () => {
           <button
             type="button"
             onClick={toggleTheme}
+            aria-label={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
             title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
             className="btn-surface p-2 rounded-xl text-xs flex items-center justify-center cursor-target cursor-pointer transition-colors"
           >
-            {theme === 'dark' ? <Sun size={15} className="text-[#FF9436]" /> : <Moon size={15} className="text-slate-700" />}
+            {theme === 'dark' ? <Sun size={15} className="text-[#FF9436]" /> : <Moon size={15} className="text-slate-800" />}
           </button>
 
           <button
             type="button"
             onClick={handleOpenCalendar}
+            aria-label="Launch Calendar Widget"
             className="btn-accent px-4 py-2 rounded-xl text-xs flex items-center gap-1.5 cursor-target shadow-md cursor-pointer"
           >
             <Play size={13} className="fill-current" />
@@ -155,9 +157,10 @@ export const HomeDashboard: React.FC = () => {
 
       {/* Main Content Area */}
       <div className="relative z-10 flex-1 w-full max-w-6xl mx-auto p-4 md:p-8 flex flex-col space-y-6">
-        {/* Navigation Pill Bar */}
-        <div
-          className="flex items-center gap-1.5 p-1.5 rounded-2xl overflow-x-auto shadow-sm transition-colors duration-200"
+        {/* Navigation Pill Bar - Centered */}
+        <nav
+          aria-label="Main Navigation"
+          className="flex items-center justify-center gap-1.5 p-1.5 mx-auto rounded-2xl overflow-x-auto shadow-sm transition-colors duration-200 max-w-full"
           style={{
             backgroundColor: 'var(--menu-nav-bg)',
             border: '1px solid var(--menu-nav-border)'
@@ -171,6 +174,7 @@ export const HomeDashboard: React.FC = () => {
                 key={item.id}
                 type="button"
                 onClick={() => setActiveTab(item.id as any)}
+                aria-pressed={isActive}
                 className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all whitespace-nowrap cursor-target cursor-pointer ${
                   isActive
                     ? 'bg-[#C44900] text-white shadow-md'
@@ -185,7 +189,7 @@ export const HomeDashboard: React.FC = () => {
               </button>
             );
           })}
-        </div>
+        </nav>
 
         {/* Tab Content Rendering with Smooth Scrolling */}
         <main className="flex-1">
@@ -238,6 +242,7 @@ export const HomeDashboard: React.FC = () => {
             <button
               type="button"
               onClick={handleOpenGithub}
+              aria-label="GitHub Repository"
               className="flex items-center gap-1.5 hover:text-[#E86711] transition-colors cursor-target cursor-pointer"
               style={{ color: 'var(--menu-text-secondary)' }}
             >
@@ -250,6 +255,7 @@ export const HomeDashboard: React.FC = () => {
             <button
               type="button"
               onClick={handleOpenPortfolio}
+              aria-label="Developer Portfolio"
               className="flex items-center gap-1.5 hover:text-[#E86711] transition-colors cursor-target cursor-pointer"
               style={{ color: 'var(--menu-text-secondary)' }}
             >

@@ -33,6 +33,7 @@ export interface TargetCursorProps {
   hideDefaultCursor?: boolean;
   hoverDuration?: number;
   parallaxOn?: boolean;
+  theme?: 'dark' | 'light';
 }
 
 export const TargetCursor: React.FC<TargetCursorProps> = ({
@@ -40,7 +41,8 @@ export const TargetCursor: React.FC<TargetCursorProps> = ({
   spinDuration = 5,
   hideDefaultCursor = false,
   hoverDuration = 0.25,
-  parallaxOn = true
+  parallaxOn = true,
+  theme = 'dark'
 }) => {
   const cursorRef = useRef<HTMLDivElement>(null);
   const cornersRef = useRef<NodeListOf<HTMLDivElement> | null>(null);
@@ -316,6 +318,10 @@ export const TargetCursor: React.FC<TargetCursorProps> = ({
     return null;
   }
 
+  const isLight = theme === 'light';
+  const strokeColor = isLight ? '#000000' : '#ffffff';
+  const dotColor = isLight ? '#000000' : '#ffffff';
+
   return (
     <div
       ref={cursorRef}
@@ -323,12 +329,28 @@ export const TargetCursor: React.FC<TargetCursorProps> = ({
     >
       <div
         ref={dotRef}
-        className="absolute left-1/2 top-1/2 w-1.5 h-1.5 bg-[#C44900] rounded-full -translate-x-1/2 -translate-y-1/2 will-change-transform shadow-[0_0_8px_#C44900]"
+        className="absolute left-1/2 top-1/2 w-1.5 h-1.5 rounded-full -translate-x-1/2 -translate-y-1/2 will-change-transform"
+        style={{
+          backgroundColor: dotColor,
+          boxShadow: isLight ? '0 0 6px rgba(0,0,0,0.4)' : '0 0 8px rgba(255,255,255,0.8)'
+        }}
       />
-      <div className="target-cursor-corner corner-tl absolute left-1/2 top-1/2 w-2.5 h-2.5 border-[2px] border-[#C44900] will-change-transform border-r-0 border-b-0 -translate-x-[150%] -translate-y-[150%]" />
-      <div className="target-cursor-corner corner-tr absolute left-1/2 top-1/2 w-2.5 h-2.5 border-[2px] border-[#C44900] will-change-transform border-l-0 border-b-0 translate-x-[50%] -translate-y-[150%]" />
-      <div className="target-cursor-corner corner-br absolute left-1/2 top-1/2 w-2.5 h-2.5 border-[2px] border-[#C44900] will-change-transform border-l-0 border-t-0 translate-x-[50%] translate-y-[50%]" />
-      <div className="target-cursor-corner corner-bl absolute left-1/2 top-1/2 w-2.5 h-2.5 border-[2px] border-[#C44900] will-change-transform border-r-0 border-t-0 -translate-x-[150%] translate-y-[50%]" />
+      <div
+        className="target-cursor-corner corner-tl absolute left-1/2 top-1/2 w-2.5 h-2.5 will-change-transform border-r-0 border-b-0 -translate-x-[150%] -translate-y-[150%]"
+        style={{ borderWidth: '2px', borderStyle: 'solid', borderColor: strokeColor }}
+      />
+      <div
+        className="target-cursor-corner corner-tr absolute left-1/2 top-1/2 w-2.5 h-2.5 will-change-transform border-l-0 border-b-0 translate-x-[50%] -translate-y-[150%]"
+        style={{ borderWidth: '2px', borderStyle: 'solid', borderColor: strokeColor }}
+      />
+      <div
+        className="target-cursor-corner corner-br absolute left-1/2 top-1/2 w-2.5 h-2.5 will-change-transform border-l-0 border-t-0 translate-x-[50%] translate-y-[50%]"
+        style={{ borderWidth: '2px', borderStyle: 'solid', borderColor: strokeColor }}
+      />
+      <div
+        className="target-cursor-corner corner-bl absolute left-1/2 top-1/2 w-2.5 h-2.5 will-change-transform border-r-0 border-t-0 -translate-x-[150%] translate-y-[50%]"
+        style={{ borderWidth: '2px', borderStyle: 'solid', borderColor: strokeColor }}
+      />
     </div>
   );
 };

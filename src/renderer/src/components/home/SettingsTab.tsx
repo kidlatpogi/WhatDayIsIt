@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { UIConfig } from '../../../../types';
 import { applyCssVariables } from '../../utils/colors';
-import { Sliders, Type, Palette, Clock, CheckSquare, Sparkles, Check, Save } from 'lucide-react';
+import { Sliders, Type, Palette, Clock, CheckSquare, Check, Save } from 'lucide-react';
 
 interface SettingsTabProps {
   initialUI: UIConfig;
@@ -56,7 +56,7 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({ initialUI, onSave }) =
 
   return (
     <div className="space-y-6 animate-fade-in pb-20">
-      {/* Sticky Save Banner */}
+      {/* Sticky Save Banner - Clean text without icon/emoji */}
       <div
         className="sticky top-0 z-20 flex items-center justify-between p-3.5 backdrop-blur-md rounded-2xl shadow-xl transition-colors duration-200"
         style={{
@@ -64,8 +64,7 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({ initialUI, onSave }) =
           border: '1px solid var(--menu-card-border)'
         }}
       >
-        <div className="flex items-center gap-2 text-xs" style={{ color: 'var(--menu-text-secondary)' }}>
-          <Sparkles size={14} className="text-[#E86711]" />
+        <div className="text-xs" style={{ color: 'var(--menu-text-secondary)' }}>
           <span>Desktop Widget Live Sync: Adjustments update your floating calendar in real-time.</span>
         </div>
 
