@@ -23,7 +23,7 @@ jobs:
       - name: Build Windows installer (no publish)
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npm run predist; npx electron-builder --win --x64 --publish never
+        run: npm run build; npx electron-builder --win --x64 --publish never
       - name: Create GitHub Release
         id: create_release
         uses: actions/create-release@v1

@@ -239,7 +239,7 @@ export class WindowManager {
 
       const AutoLaunch = require('auto-launch');
       const autoLauncher = new AutoLaunch({
-        name: 'Calendar Widget',
+        name: 'WhatDayIsIt',
         path: app.getPath('exe')
       });
 
