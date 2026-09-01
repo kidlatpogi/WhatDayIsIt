@@ -28,13 +28,22 @@ export class WindowManager {
     const windowPos = cfg.ui?.windowPos || { x: undefined, y: undefined };
 
     let targetDisplay = screen.getPrimaryDisplay();
-    if (windowPos.x !== undefined && windowPos.y !== undefined) {
+    let posX: number;
+    let posY: number;
+
+    if (typeof windowPos.x === 'number' && typeof windowPos.y === 'number' && !isNaN(windowPos.x) && !isNaN(windowPos.y)) {
       targetDisplay = screen.getDisplayMatching({
         x: windowPos.x,
         y: windowPos.y,
         width: 400,
         height: 400
       });
+      posX = windowPos.x;
+      posY = windowPos.y;
+    } else {
+      // Default to upper-right corner of primary screen
+      posX = targetDisplay.workArea.x + targetDisplay.workArea.width - 430;
+      posY = targetDisplay.workArea.y + 20;
     }
 
     const { height: screenHeight } = targetDisplay.workAreaSize;
@@ -42,6 +51,8 @@ export class WindowManager {
     const preloadPath = path.join(__dirname, '..', 'preload', 'index.js');
 
     const windowOptions: Electron.BrowserWindowConstructorOptions = {
+      x: Math.round(posX),
+      y: Math.round(posY),
       width: 400,
       height: screenHeight,
       transparent: true,
@@ -60,11 +71,6 @@ export class WindowManager {
         contextIsolation: true
       }
     };
-
-    if (windowPos.x !== undefined && windowPos.y !== undefined) {
-      windowOptions.x = windowPos.x;
-      windowOptions.y = windowPos.y;
-    }
 
     this.win = new BrowserWindow(windowOptions);
     this.icalService.mainWindow = this.win;
@@ -105,12 +111,13 @@ export class WindowManager {
     const savePos = () => {
       if (rememberPosition && this.win && !this.win.isDestroyed()) {
         const [x, y] = this.win.getPosition();
-        this.cfgManager.updateConfig({ windowPos: { x, y } });
+        this.cfgManager.persistWidgetPositionImmediate(x, y);
       }
     };
 
     this.win.on('moved', savePos);
     this.win.on('resize', savePos);
+    this.win.on('close', savePos);
 
     this.win.on('closed', () => {
       this.win = null;

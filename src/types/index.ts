@@ -86,6 +86,7 @@ export interface ElectronAPI {
   toggleMaximizeWindow: (which: 'main' | 'home') => Promise<void>;
   closeWindow: (which: 'main' | 'home') => Promise<void>;
   toggleCollapse: () => Promise<boolean>;
+  saveWidgetPosition?: (pos: { x: number; y: number }) => Promise<boolean>;
   showNotification?: (title: string, message: string) => Promise<boolean>;
   requestMainGC?: () => Promise<{ ok: boolean }>;
   clearMemory?: () => Promise<{ ok: boolean }>;

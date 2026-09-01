@@ -151,11 +151,24 @@ export function setupIpcHandlers(
       const w = BrowserWindow.fromWebContents(ev.sender) || windowManager.win;
       if (!w || w.isDestroyed()) return false;
       const [x, y] = w.getPosition();
-      w.setPosition(Math.round(x + dx), Math.round(y + dy));
+      const newX = Math.round(x + dx);
+      const newY = Math.round(y + dy);
+      w.setPosition(newX, newY);
+      if (w === windowManager.win) {
+        cfgManager.persistWidgetPositionDebounced(newX, newY);
+      }
       return true;
     } catch {
       return false;
     }
+  });
+
+  ipcMain.handle('save-widget-position', (_ev, pos: { x: number; y: number }) => {
+    if (pos && typeof pos.x === 'number' && typeof pos.y === 'number') {
+      cfgManager.persistWidgetPositionImmediate(pos.x, pos.y);
+      return true;
+    }
+    return false;
   });
 
   ipcMain.handle('set-window-bounds', async (_ev, which: 'main' | 'home', bounds: { width?: number; height?: number; x?: number; y?: number; persist?: boolean }) => {

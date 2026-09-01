@@ -46,6 +46,7 @@ const api: ElectronAPI = {
   toggleMaximizeWindow: (which: 'main' | 'home') => ipcRenderer.invoke('toggle-maximize-window', which),
   closeWindow: (which: 'main' | 'home') => ipcRenderer.invoke('close-window', which),
   toggleCollapse: () => ipcRenderer.invoke('toggle-collapse'),
+  saveWidgetPosition: (pos: { x: number; y: number }) => ipcRenderer.invoke('save-widget-position', pos),
   showNotification: (title: string, message: string) => ipcRenderer.invoke('show-notification', title, message)
 };
 

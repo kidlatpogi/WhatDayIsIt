@@ -126,6 +126,22 @@ export class ConfigManager {
     this.saveConfig();
   }
 
+  public persistWidgetPositionDebounced(x: number, y: number): void {
+    if (!this.config) this.config = this.loadConfig();
+    this.config.ui = this.config.ui || {};
+    this.config.ui.windowPos = { x: Math.round(x), y: Math.round(y) };
+    if (this._saveBoundsTimer) clearTimeout(this._saveBoundsTimer);
+    this._saveBoundsTimer = setTimeout(() => this.saveConfig(), 300);
+  }
+
+  public persistWidgetPositionImmediate(x: number, y: number): void {
+    if (!this.config) this.config = this.loadConfig();
+    this.config.ui = this.config.ui || {};
+    this.config.ui.windowPos = { x: Math.round(x), y: Math.round(y) };
+    if (this._saveBoundsTimer) clearTimeout(this._saveBoundsTimer);
+    this.saveConfig();
+  }
+
   public persistWindowBoundsDebounced(winKey: string, bounds: { width?: number; height?: number; x?: number; y?: number }): void {
     this.config.windowBounds = this.config.windowBounds || {};
     this.config.windowBounds[winKey] = {

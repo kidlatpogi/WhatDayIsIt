@@ -1,6 +1,6 @@
 <div align="center">
 
-# WhatDayIsIt
+# What Day is It?
 
 **A lightweight, transparent desktop calendar overlay for Windows synchronized directly with Google Calendar.**
 
@@ -13,7 +13,7 @@
 
 <br/>
 
-[**Download Installer (.exe)**](https://github.com/kidlatpogi/WhatDayIsIt/releases/latest) • [**Why I Built This**](#-why-i-built-this) • [**Keybinds**](#%EF%B8%8F-keybinds) • [**Visual Showcase**](#visual-showcase) • [**Setup Guide**](#google-calendar-setup) • [**Development**](#development--build)
+[**Download Installer (.exe)**](https://github.com/kidlatpogi/WhatDayIsIt/releases/latest) • [**Why I Built This**](#-why-i-built-this) • [**Keybinds**](#%EF%B8%8F-keybinds) • [**Visual Showcase**](#visual-showcase) • [**Setup Guide**](#google-calendar-setup)
 
 <br/>
 
@@ -35,12 +35,13 @@ That’s how this widget was born.
 
 ## Technical Overview
 
-**WhatDayIsIt** is an ambient, always-visible desktop overlay engineered to keep your upcoming schedule in sight without context switching. Designed with a **local-first privacy architecture**, all feed synchronization, RRULE recurrence expansion, and preferences are computed directly on your PC with a **sub-50MB RAM footprint**.
+**What Day is It?** is an ambient, always-visible desktop overlay engineered to keep your upcoming schedule in sight without context switching. Designed with a **local-first privacy architecture**, all feed synchronization, RRULE recurrence expansion, and preferences are computed directly on your PC with a **sub-50MB RAM footprint**.
 
 ### Key Features
 
 - **100% Local-First Privacy**: Connects directly to Google Calendar via HTTPS. Zero cloud relays, zero tracking telemetry, and zero behavioral analytics.
 - **Hardware-Accelerated DirectComposition**: Native per-pixel alpha transparency on Windows DWM that launches instantly transparent on startup.
+- **Persistent Desktop Positioning**: Intelligently remembers your custom window coordinates across monitors and restores exact screen placement upon relaunch.
 - **RFC 5545 Recurrence Engine**: Comprehensive support for `VEVENT`, complex `RRULE` (daily, weekly, monthly, yearly), `EXDATE` exception rules, and multi-timezone offsets.
 - **Real-Time Live Customization**: Modify typography, theme swatches, font sizes, clock formats, and day group spacing with immediate live reactivity on your desktop widget.
 - **Fluid Drag & Click-Through**: Move freely across monitors using custom pointer capture, or activate click-through mode (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>C</kbd>) to pass mouse clicks to background windows.
@@ -68,7 +69,7 @@ That’s how this widget was born.
 *Ambient transparent floating widget alongside the centralized control console.*
 
 <p align="center">
-  <img src="assets/Calendar-and-Menu-Example.png" alt="Desktop Timeline and Dashboard" width="880"/>
+  <img src="assets/Calendar-Desktop-Menu-Example.png" alt="Desktop Timeline and Dashboard" width="880"/>
 </p>
 
 ---
@@ -117,43 +118,7 @@ That’s how this widget was born.
 1. **Open Google Calendar**: Navigate to [Google Calendar Settings](https://calendar.google.com/calendar/r/settings).
 2. **Select Calendar**: In the left sidebar under *"Settings for my calendars"*, click your desired calendar.
 3. **Copy Secret Address**: Scroll down to the *"Integrate calendar"* section and copy the **"Secret address in iCal format"** (`.ics` URL).
-4. **Add to Widget**: Open WhatDayIsIt, go to the **Calendars** tab, paste the link, and click **Add Feed**.
-
----
-
-## Development & Build
-
-### Prerequisites
-- [Node.js](https://nodejs.org/) (v18.0.0 or higher)
-- [npm](https://www.npmjs.com/) (v9.0.0 or higher)
-- Windows 10 / 11 (64-bit)
-
-### Installation
-
-```bash
-# Clone the repository
-git clone https://github.com/kidlatpogi/WhatDayIsIt.git
-cd WhatDayIsIt
-
-# Install project dependencies
-npm install
-
-# Compile TypeScript and Vite bundles
-npm run build
-
-# Start the application in development mode
-npm start
-```
-
-### Packaging Windows Installer
-
-```bash
-# Package the production NSIS setup executable (.exe)
-npm run dist
-```
-
-Packaged installers and unpacked binaries are generated in the `dist/` directory:
-- `dist/Calendar Widget Setup 1.1.0.exe`
+4. **Add to Widget**: Open What Day is It?, go to the **Calendars** tab, paste the link, and click **Add Feed**.
 
 ---
 
@@ -161,45 +126,45 @@ Packaged installers and unpacked binaries are generated in the `dist/` directory
 
 ```
 Schedule-Widget-Electron/
-├── assets/                          # Application icons, showcase media, fonts, and NSIS scripts
-│   ├── Fonts/                       # Home Video & LED Dot-Matrix font assets
-│   ├── calendar.ico                 # Application window & tray icon
-│   ├── Calendar-Desktop-Example.png # Desktop showcase screenshot
-│   ├── Calendar-and-Menu-Example.png# Dashboard & widget screenshot
-│   ├── Overview.png                 # Overview console screenshot
-│   ├── Customization.png            # Customizer screenshot
-│   ├── Dragging.gif                 # Dragging demo animation
-│   ├── Customizing.gif              # Customization demo animation
-│   ├── Layout.gif                   # Layout sync demo animation
-│   └── uninstaller.nsh              # Custom NSIS registry and cleanup script
+├── assets/                               # Application icons, showcase media, fonts, and NSIS scripts
+│   ├── Fonts/                            # Home Video & LED Dot-Matrix font assets
+│   ├── calendar.ico                      # Application window & tray icon
+│   ├── Calendar-Desktop-Example.png      # Desktop showcase screenshot
+│   ├── Calendar-Desktop-Menu-Example.png # Dashboard & widget screenshot
+│   ├── Overview.png                      # Overview console screenshot
+│   ├── Customization.png                 # Customizer screenshot
+│   ├── Dragging.gif                      # Dragging demo animation
+│   ├── Customizing.gif                   # Customization demo animation
+│   ├── Layout.gif                        # Layout sync demo animation
+│   └── uninstaller.nsh                   # Custom NSIS registry and cleanup script
 ├── src/
-│   ├── main/                        # Electron Main Process (Node.js runtime)
-│   │   ├── index.ts                 # Lifecycle, single-instance lock, GPU flags
-│   │   ├── window-manager.ts        # DirectComposition transparent window creation
-│   │   ├── config-manager.ts        # Typed configuration persistence (%APPDATA%)
-│   │   ├── ical-service.ts          # RFC 5545 parser, RRULE recurrence expansion, ETag cache
-│   │   ├── tray-manager.ts          # Native Windows tray icon & context menus
-│   │   └── ipc-handlers.ts          # Type-safe IPC channels & live broadcast
-│   ├── preload/                     # Electron Preload Script (Context Bridge)
-│   │   └── index.ts                 # Secure window.electronAPI exposed to renderer
-│   ├── renderer/                    # React 18 + Tailwind CSS + Vite Frontend
+│   ├── main/                             # Electron Main Process (Node.js runtime)
+│   │   ├── index.ts                      # Lifecycle, single-instance lock, GPU flags
+│   │   ├── window-manager.ts             # DirectComposition transparent window creation & position recall
+│   │   ├── config-manager.ts             # Typed configuration & position persistence (%APPDATA%)
+│   │   ├── ical-service.ts               # RFC 5545 parser, RRULE recurrence expansion, ETag cache
+│   │   ├── tray-manager.ts               # Native Windows tray icon & context menus
+│   │   └── ipc-handlers.ts               # Type-safe IPC channels & live broadcast
+│   ├── preload/                          # Electron Preload Script (Context Bridge)
+│   │   └── index.ts                      # Secure window.electronAPI exposed to renderer
+│   ├── renderer/                         # React 18 + Tailwind CSS + Vite Frontend
 │   │   ├── src/
 │   │   │   ├── components/
-│   │   │   │   ├── common/          # TargetCursor (GSAP magnetic bracket)
-│   │   │   │   ├── home/            # DashboardTab, SettingsTab, CalendarsTab, TutorialTab, PrivacyTab, LicenseTab, WelcomeModal
-│   │   │   │   └── widget/          # WidgetView, ClockHeader, EventItem, WidgetControls
-│   │   │   ├── hooks/               # useConfig, useEvents
-│   │   │   ├── utils/               # Color conversion, date parsing, CSS variables
-│   │   │   ├── App.tsx              # View router (Main Widget vs Home Dashboard)
-│   │   │   ├── main.tsx             # React entry point
-│   │   │   └── index.css            # Design tokens, theme variables, scrollbars
-│   │   └── index.html               # Semantic HTML entry with SEO meta tags & CSP
-│   └── types/                       # Shared TypeScript definitions (AppConfig, UIConfig, CalendarEvent)
-├── package.json                     # Project scripts and dependencies
-├── tsconfig.json                    # Renderer TypeScript configuration
-├── tsconfig.electron.json           # Main & Preload TypeScript configuration
-├── vite.config.ts                   # Vite bundler configuration
-└── tailwind.config.js               # Tailwind CSS theme configuration
+│   │   │   │   ├── common/               # TargetCursor (GSAP magnetic bracket)
+│   │   │   │   ├── home/                 # DashboardTab, SettingsTab, CalendarsTab, TutorialTab, PrivacyTab, LicenseTab, WelcomeModal
+│   │   │   │   └── widget/               # WidgetView, ClockHeader, EventItem, WidgetControls
+│   │   │   ├── hooks/                    # useConfig, useEvents
+│   │   │   ├── utils/                    # Color conversion, date parsing, CSS variables
+│   │   │   ├── App.tsx                   # View router (Main Widget vs Home Dashboard)
+│   │   │   ├── main.tsx                  # React entry point
+│   │   │   └── index.css                 # Design tokens, theme variables, scrollbars
+│   │   └── index.html                    # Semantic HTML entry with SEO meta tags & CSP
+│   └── types/                            # Shared TypeScript definitions (AppConfig, UIConfig, CalendarEvent)
+├── package.json                          # Project scripts and dependencies
+├── tsconfig.json                         # Renderer TypeScript configuration
+├── tsconfig.electron.json                # Main & Preload TypeScript configuration
+├── vite.config.ts                        # Vite bundler configuration
+└── tailwind.config.js                    # Tailwind CSS theme configuration
 ```
 
 ---
