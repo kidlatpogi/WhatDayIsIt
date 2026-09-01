@@ -1,0 +1,207 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Home Video';
+  src: url('./assets/fonts/HomeVideo-BLG6G.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'LED Dot-Matrix';
+  src: url('./assets/fonts/LED Dot-Matrix 400.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* Brand Tokens from designs.md */
+  --color-accent: #C44900;
+  --color-accent-hover: #E86711;
+  --color-accent-active: #D65408;
+  
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'Roboto Mono', monospace;
+
+  /* Dynamic Widget Variables */
+  --app-font-family: "Segoe UI", Arial, sans-serif;
+  --app-font-size: 14px;
+  --app-font-small: 11px;
+  --app-font-large: 16px;
+  --schedule-color: #ffffff;
+  --date-time-color: #cfe9ff;
+  --highlight-color: #a3ff33;
+  --highlight-rgba: rgba(163, 255, 51, 0.15);
+  --ongoing-color: #a3ff33;
+  --ongoing-rgba: rgba(163, 255, 51, 0.15);
+  --upcoming-color: #a3ff33;
+  --upcoming-rgba: rgba(163, 255, 51, 0.15);
+  --day-color: #ffffff;
+  --date-color: #cfe9ff;
+  --date-spacing: 16px;
+  --clock-color: #ffffff;
+  --clock-font-family: "Segoe UI", Arial, sans-serif;
+  --clock-size: 18px;
+  --clock-alignment: left;
+
+  /* Theme Tokens: Dark (Default) */
+  --menu-bg: #141313;
+  --menu-header-bg: rgba(20, 19, 19, 0.92);
+  --menu-surface: #1c1b1b;
+  --menu-surface-border: rgba(255, 255, 255, 0.08);
+  --menu-surface-hover: #232222;
+  --menu-input-bg: #101010;
+  --menu-input-border: rgba(255, 255, 255, 0.14);
+  --menu-text-primary: #ffffff;
+  --menu-text-secondary: rgba(255, 255, 255, 0.7);
+  --menu-text-muted: rgba(255, 255, 255, 0.45);
+  --menu-nav-bg: #1c1b1b;
+  --menu-nav-border: rgba(255, 255, 255, 0.1);
+  --menu-card-border: rgba(255, 255, 255, 0.08);
+  --menu-divider: rgba(255, 255, 255, 0.08);
+}
+
+.theme-light {
+  /* Theme Tokens: Light */
+  --menu-bg: #f8f8f8;
+  --menu-header-bg: rgba(248, 248, 248, 0.92);
+  --menu-surface: #ffffff;
+  --menu-surface-border: rgba(0, 0, 0, 0.08);
+  --menu-surface-hover: #f1f5f9;
+  --menu-input-bg: #f1f5f9;
+  --menu-input-border: rgba(0, 0, 0, 0.12);
+  --menu-text-primary: #0f172a;
+  --menu-text-secondary: #334155;
+  --menu-text-muted: #64748b;
+  --menu-nav-bg: #ffffff;
+  --menu-nav-border: rgba(0, 0, 0, 0.08);
+  --menu-card-border: rgba(0, 0, 0, 0.08);
+  --menu-divider: rgba(0, 0, 0, 0.08);
+}
+
+html, body, #root {
+  background: transparent !important;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Dynamic Calendar Widget Styles */
+#app {
+  font-family: var(--app-font-family) !important;
+}
+
+#app .day-header {
+  font-size: var(--app-font-large) !important;
+}
+
+#app .event-item {
+  font-size: var(--app-font-size) !important;
+}
+
+#app .event-time {
+  font-size: var(--app-font-small) !important;
+  color: var(--date-time-color) !important;
+}
+
+#app .event-summary {
+  color: var(--schedule-color) !important;
+}
+
+#app .day-name {
+  color: var(--day-color) !important;
+}
+
+#app .day-group.is-today .day-name {
+  color: var(--highlight-color) !important;
+}
+
+#app .day-group.is-today .day-header {
+  background-color: var(--highlight-rgba) !important;
+}
+
+#app .date-subtext {
+  color: var(--date-color) !important;
+}
+
+#app .clock-header {
+  color: var(--clock-color) !important;
+  font-family: var(--clock-font-family) !important;
+  font-size: var(--clock-size) !important;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(120, 120, 120, 0.25);
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(196, 73, 0, 0.7);
+}
+
+/* Button & Card utilities conforming to designs.md */
+.btn-accent {
+  background: linear-gradient(135deg, #C44900 0%, #E86711 100%);
+  color: #ffffff;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 14px rgba(196, 73, 0, 0.3);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-accent:hover {
+  background: linear-gradient(135deg, #D65408 0%, #F57C20 100%);
+  box-shadow: 0 6px 20px rgba(196, 73, 0, 0.45);
+  transform: translateY(-1px);
+}
+
+.btn-accent:active {
+  transform: translateY(0);
+}
+
+.btn-surface {
+  background: var(--menu-surface);
+  color: var(--menu-text-primary);
+  border: 1px solid var(--menu-surface-border);
+  transition: all 0.2s ease;
+}
+
+.btn-surface:hover {
+  background: var(--menu-surface-hover);
+  border-color: rgba(196, 73, 0, 0.4);
+  transform: translateY(-1px);
+}
+
+.card-surface {
+  background: var(--menu-surface);
+  color: var(--menu-text-primary);
+  border: 1px solid var(--menu-card-border);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.badge-mono {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+/* Cursor target for magnetic HUD cursor */
+.cursor-target {
+  cursor: pointer;
+}

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" style="background: transparent !important;">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WhatDayIsIt — Lightweight Desktop Timeline</title>
+    
+    <!-- SEO & Metadata -->
+    <meta name="description" content="WhatDayIsIt is a sleek, lightweight, transparent desktop calendar widget for Windows connected to Google Calendar via local-first RFC 5545 iCal synchronization." />
+    <meta name="author" content="Zeus Angelo Bautista" />
+    <meta name="keywords" content="WhatDayIsIt, calendar widget, desktop calendar, electron, google calendar, ical, transparent widget, productivity, local-first" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#141313" />
+
+    <!-- Open Graph Protocol -->
+    <meta property="og:title" content="WhatDayIsIt — Lightweight Desktop Timeline" />
+    <meta property="og:description" content="Ambient desktop calendar overlay with local-first Google Calendar synchronization." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://github.com/kidlatpogi/WhatDayIsIt" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="WhatDayIsIt — Lightweight Desktop Timeline" />
+    <meta name="twitter:description" content="Ambient desktop calendar overlay with local-first Google Calendar synchronization." />
+
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' https://calendar.google.com https://*.google.com; img-src 'self' data: https:;" />
+
+    <!-- Google Fonts: Inter & Roboto Mono with non-blocking display swap -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Roboto+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  </head>
+  <body style="background: transparent !important;" class="m-0 p-0 select-none">
+    <div id="root" style="background: transparent !important;"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
