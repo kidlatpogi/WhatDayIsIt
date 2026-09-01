@@ -18,7 +18,13 @@ export const WelcomeModal: React.FC<WelcomeModalProps> = ({ isOpen, onAccept }) 
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-lg animate-fade-in text-white">
-      <div className="relative w-full max-w-lg card-surface rounded-2xl p-7 md:p-8 border border-white/15 shadow-2xl space-y-6">
+      <div
+        className="relative w-full max-w-lg rounded-2xl p-7 md:p-8 shadow-2xl space-y-6"
+        style={{
+          backgroundColor: '#1c1b1b',
+          border: '1px solid rgba(255, 255, 255, 0.12)'
+        }}
+      >
         <div className="flex items-center gap-3">
           <div className="p-3 bg-[#C44900]/20 text-[#E86711] rounded-2xl border border-[#C44900]/30">
             <Calendar size={24} />
@@ -29,8 +35,14 @@ export const WelcomeModal: React.FC<WelcomeModalProps> = ({ isOpen, onAccept }) 
           </div>
         </div>
 
-        <div className="p-4 bg-[#101010] rounded-xl border border-white/5 space-y-2.5 text-xs text-white/80 leading-relaxed font-sans">
-          <div className="flex items-center gap-2 text-emerald-400 font-semibold text-xs">
+        <div
+          className="p-4 rounded-xl space-y-2.5 text-xs text-white/80 leading-relaxed font-sans"
+          style={{
+            backgroundColor: '#101010',
+            border: '1px solid rgba(255, 255, 255, 0.06)'
+          }}
+        >
+          <div className="flex items-center gap-2 text-[#E86711] font-semibold text-xs">
             <ShieldCheck size={16} />
             <span>Local Privacy & Terms Guarantee:</span>
           </div>
@@ -47,7 +59,7 @@ export const WelcomeModal: React.FC<WelcomeModalProps> = ({ isOpen, onAccept }) 
             type="checkbox"
             checked={accepted}
             onChange={(e) => setAccepted(e.target.checked)}
-            className="rounded border-white/20 bg-white/5 accent-[#C44900] w-4 h-4 cursor-pointer"
+            className="rounded accent-[#C44900] w-4 h-4 cursor-pointer"
           />
           <span>I accept the local data terms and privacy conditions</span>
         </label>

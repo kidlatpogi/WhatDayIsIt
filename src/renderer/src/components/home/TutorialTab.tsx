@@ -188,7 +188,7 @@ export const TutorialTab: React.FC = () => {
           <p style={{ color: 'var(--menu-text-secondary)' }}>
             Return to this dashboard, switch to the <b>&ldquo;Calendars&rdquo;</b> tab, paste your copied URL into the feed input field, and click <b>&ldquo;Add Feed&rdquo;</b>.
           </p>
-          <p className="text-emerald-500 font-semibold text-[11px]">
+          <p className="text-[#E86711] font-semibold text-[11px]">
             ✓ Synchronization Complete: The local parser will fetch and update schedule intervals in the background.
           </p>
         </section>

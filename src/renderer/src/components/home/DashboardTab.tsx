@@ -1,11 +1,10 @@
 import React from 'react';
 import { AppConfig } from '../../../../types';
-import { Calendar, Play, BookOpen, ExternalLink, ShieldCheck, Zap, Sliders } from 'lucide-react';
+import { Calendar, Play, BookOpen, ExternalLink, ShieldCheck, Sliders } from 'lucide-react';
 
 interface DashboardTabProps {
   config: AppConfig | null;
   onOpenCalendar: () => void;
-  onRefresh: () => void;
   onNavigateTab: (tab: string) => void;
 }
 
@@ -32,12 +31,6 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
 
         <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="space-y-2 max-w-xl">
-            <div className="flex items-center gap-2">
-              <span className="badge-mono px-2.5 py-0.5 rounded-full bg-[#C44900]/15 text-[#E86711] border border-[#C44900]/30 font-bold">
-                LOCAL-FIRST CALENDAR
-              </span>
-            </div>
-
             <h2
               className="text-2xl md:text-3xl font-extrabold tracking-tight font-sans"
               style={{ color: 'var(--menu-text-primary)' }}
@@ -49,7 +42,7 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
               className="text-xs md:text-sm leading-relaxed"
               style={{ color: 'var(--menu-text-secondary)' }}
             >
-              Ambient, lightweight desktop calendar widget synchronized directly with Google Calendar. Zero external cloud servers, minimal memory footprint, and full customization.
+              Ambient, lightweight desktop calendar widget synchronized directly with Google Calendar. Zero external cloud servers, minimal memory footprint, and live customization.
             </p>
           </div>
 
@@ -60,7 +53,7 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
               className="btn-accent px-5 py-2.5 rounded-xl text-xs flex items-center justify-center gap-2 cursor-target cursor-pointer shadow-lg"
             >
               <Play size={14} className="fill-current" />
-              <span>Open Calendar</span>
+              <span>Launch Widget</span>
             </button>
 
             <button
@@ -69,7 +62,7 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
               className="btn-surface px-4 py-2.5 rounded-xl text-xs flex items-center justify-center gap-2 cursor-target cursor-pointer"
             >
               <BookOpen size={14} />
-              <span>Tutorial Guide</span>
+              <span>Integration Guide</span>
             </button>
           </div>
         </div>
@@ -179,17 +172,17 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
             <span className="badge-mono" style={{ color: 'var(--menu-text-muted)' }}>
               03 / PRIVACY
             </span>
-            <div className="p-2 rounded-lg bg-emerald-500/10 text-emerald-500 group-hover:scale-110 transition-transform">
+            <div className="p-2 rounded-lg bg-[#C44900]/10 text-[#E86711] group-hover:scale-110 transition-transform">
               <ShieldCheck size={18} />
             </div>
           </div>
 
           <div>
-            <div className="text-xs font-mono text-emerald-500 mb-1 font-semibold">
+            <div className="text-xs font-mono text-[#E86711] mb-1 font-semibold">
               100% LOCAL ARCHITECTURE
             </div>
             <h3
-              className="text-sm font-semibold group-hover:text-emerald-500 transition-colors"
+              className="text-sm font-semibold group-hover:text-[#E86711] transition-colors"
               style={{ color: 'var(--menu-text-primary)' }}
             >
               Zero Telemetry & Tracking
@@ -212,10 +205,9 @@ export const DashboardTab: React.FC<DashboardTabProps> = ({
         </div>
       </div>
 
-      {/* Keyboard Shortcuts Cheatsheet */}
+      {/* Keyboard Shortcuts Cheatsheet - NO ICON */}
       <div className="card-surface rounded-2xl p-5">
-        <div className="flex items-center gap-2 mb-3">
-          <Zap size={14} className="text-[#E86711]" />
+        <div className="pb-3 mb-3 border-b" style={{ borderColor: 'var(--menu-divider)' }}>
           <h4
             className="text-xs font-bold uppercase tracking-wider"
             style={{ color: 'var(--menu-text-primary)' }}

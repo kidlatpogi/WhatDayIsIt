@@ -126,8 +126,8 @@ export const CalendarsTab: React.FC<CalendarsTabProps> = ({
           <div
             className={`flex items-center gap-2 text-xs p-3 rounded-lg border ${
               feedback.type === 'success'
-                ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20'
-                : 'bg-red-500/10 text-red-500 border-red-500/20'
+                ? 'bg-[#C44900]/15 text-[#E86711] border-[#C44900]/30'
+                : 'bg-red-500/10 text-red-400 border-red-500/20'
             }`}
           >
             {feedback.type === 'success' ? <CheckCircle2 size={15} /> : <AlertCircle size={15} />}

@@ -319,16 +319,16 @@ export const TargetCursor: React.FC<TargetCursorProps> = ({
   return (
     <div
       ref={cursorRef}
-      className="fixed top-0 left-0 w-0 h-0 pointer-events-none z-[9999] mix-blend-screen -translate-x-1/2 -translate-y-1/2"
+      className="fixed top-0 left-0 w-0 h-0 pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2"
     >
       <div
         ref={dotRef}
         className="absolute left-1/2 top-1/2 w-1.5 h-1.5 bg-[#C44900] rounded-full -translate-x-1/2 -translate-y-1/2 will-change-transform shadow-[0_0_8px_#C44900]"
       />
-      <div className="target-cursor-corner corner-tl absolute left-1/2 top-1/2 w-2.5 h-2.5 border-[2px] border-[#E86711] will-change-transform border-r-0 border-b-0 -translate-x-[150%] -translate-y-[150%]" />
-      <div className="target-cursor-corner corner-tr absolute left-1/2 top-1/2 w-2.5 h-2.5 border-[2px] border-[#E86711] will-change-transform border-l-0 border-b-0 translate-x-[50%] -translate-y-[150%]" />
-      <div className="target-cursor-corner corner-br absolute left-1/2 top-1/2 w-2.5 h-2.5 border-[2px] border-[#E86711] will-change-transform border-l-0 border-t-0 translate-x-[50%] translate-y-[50%]" />
-      <div className="target-cursor-corner corner-bl absolute left-1/2 top-1/2 w-2.5 h-2.5 border-[2px] border-[#E86711] will-change-transform border-r-0 border-t-0 -translate-x-[150%] translate-y-[50%]" />
+      <div className="target-cursor-corner corner-tl absolute left-1/2 top-1/2 w-2.5 h-2.5 border-[2px] border-[#C44900] will-change-transform border-r-0 border-b-0 -translate-x-[150%] -translate-y-[150%]" />
+      <div className="target-cursor-corner corner-tr absolute left-1/2 top-1/2 w-2.5 h-2.5 border-[2px] border-[#C44900] will-change-transform border-l-0 border-b-0 translate-x-[50%] -translate-y-[150%]" />
+      <div className="target-cursor-corner corner-br absolute left-1/2 top-1/2 w-2.5 h-2.5 border-[2px] border-[#C44900] will-change-transform border-l-0 border-t-0 translate-x-[50%] translate-y-[50%]" />
+      <div className="target-cursor-corner corner-bl absolute left-1/2 top-1/2 w-2.5 h-2.5 border-[2px] border-[#C44900] will-change-transform border-r-0 border-t-0 -translate-x-[150%] translate-y-[50%]" />
     </div>
   );
 };

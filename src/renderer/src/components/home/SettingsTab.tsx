@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { UIConfig } from '../../../../types';
 import { applyCssVariables } from '../../utils/colors';
-import { Sliders, Type, Palette, Clock, CheckSquare, Sparkles, Check, Save, Eye } from 'lucide-react';
+import { Sliders, Type, Palette, Clock, CheckSquare, Sparkles, Check, Save } from 'lucide-react';
 
 interface SettingsTabProps {
   initialUI: UIConfig;
@@ -17,13 +17,13 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({ initialUI, onSave }) =
     setFormData({ ...initialUI });
   }, [initialUI]);
 
-  // Real-time live update across all windows as settings change
+  // Real-time live update: updates the literal desktop calendar window in real-time
   const handleChange = (key: keyof UIConfig, value: any) => {
     const next = { ...formData, [key]: value };
     setFormData(next);
     applyCssVariables(next);
 
-    // Broadcast live to floating widget in real time
+    // Broadcast live to floating desktop widget immediately
     try {
       window.electronAPI?.setConfig(next);
     } catch {
@@ -36,7 +36,7 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({ initialUI, onSave }) =
       setIsSaving(true);
       await onSave(formData);
       setSavedSuccess(true);
-      setTimeout(() => setSavedSuccess(false), 3000);
+      setTimeout(() => setSavedSuccess(false), 2500);
     } catch (e: any) {
       alert('Failed to save settings: ' + e?.message);
     } finally {
@@ -56,7 +56,7 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({ initialUI, onSave }) =
 
   return (
     <div className="space-y-6 animate-fade-in pb-20">
-      {/* Sticky Save Confirmation Banner */}
+      {/* Sticky Save Banner */}
       <div
         className="sticky top-0 z-20 flex items-center justify-between p-3.5 backdrop-blur-md rounded-2xl shadow-xl transition-colors duration-200"
         style={{
@@ -66,98 +66,18 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({ initialUI, onSave }) =
       >
         <div className="flex items-center gap-2 text-xs" style={{ color: 'var(--menu-text-secondary)' }}>
           <Sparkles size={14} className="text-[#E86711]" />
-          <span>Real-time Live Sync active: Adjustments update the desktop widget instantly.</span>
+          <span>Desktop Widget Live Sync: Adjustments update your floating calendar in real-time.</span>
         </div>
 
         <button
           type="button"
           onClick={handleSave}
           disabled={isSaving}
-          className={`px-5 py-2 rounded-xl text-xs flex items-center gap-2 cursor-target cursor-pointer shadow-lg transition-all ${
-            savedSuccess
-              ? 'bg-emerald-600 text-white shadow-emerald-900/30'
-              : 'btn-accent'
-          } disabled:opacity-50`}
+          className="btn-accent px-5 py-2 rounded-xl text-xs flex items-center gap-2 cursor-target cursor-pointer shadow-lg disabled:opacity-50"
         >
           {savedSuccess ? <Check size={14} /> : <Save size={14} />}
           <span>{savedSuccess ? 'Settings Saved & Synced!' : isSaving ? 'Saving...' : 'Save Settings'}</span>
         </button>
-      </div>
-
-      {/* Real-time Widget Simulation Card */}
-      <div
-        className="card-surface rounded-2xl p-5 space-y-3 cursor-target transition-colors duration-200"
-        style={{
-          backgroundColor: 'var(--menu-surface)',
-          border: '1px solid var(--menu-card-border)'
-        }}
-      >
-        <div className="flex items-center justify-between pb-2 border-b" style={{ borderColor: 'var(--menu-divider)' }}>
-          <div className="flex items-center gap-2">
-            <Eye size={15} className="text-[#E86711]" />
-            <h3 className="font-bold uppercase tracking-wider text-xs" style={{ color: 'var(--menu-text-primary)' }}>
-              Real-Time Desktop Widget Preview
-            </h3>
-          </div>
-          <span className="badge-mono text-[9px] px-2 py-0.5 rounded bg-[#C44900]/15 text-[#E86711]">
-            LIVE FEEDBACK
-          </span>
-        </div>
-
-        <div
-          className="p-4 rounded-xl space-y-2.5 transition-all"
-          style={{
-            backgroundColor: 'rgba(0, 0, 0, 0.45)',
-            fontFamily: formData.fontFamily ? `"${formData.fontFamily}", sans-serif` : 'var(--font-sans)',
-            fontSize: `${formData.fontSize ?? 14}px`
-          }}
-        >
-          {/* Simulated Clock */}
-          {formData.showClock !== false && (
-            <div
-              className="font-bold text-base pb-1"
-              style={{
-                color: formData.clockColor || '#ffffff',
-                fontFamily: formData.clockFontFamily ? `"${formData.clockFontFamily}", sans-serif` : 'var(--font-sans)',
-                textAlign: (formData.clockAlignment as any) || 'left'
-              }}
-            >
-              {formData.clock12Hour ? '12:00 PM' : '12:00'}
-            </div>
-          )}
-
-          {/* Today Header */}
-          <div
-            className="p-2 rounded-lg font-bold flex items-center justify-between"
-            style={{
-              backgroundColor: formData.highlightColor ? `${formData.highlightColor}20` : 'rgba(163, 255, 51, 0.15)',
-              color: formData.highlightColor || '#a3ff33'
-            }}
-          >
-            <span>Tuesday <span style={{ color: formData.dateColor || '#cfe9ff', fontWeight: 'normal' }}>Sep 1, 2026</span></span>
-            <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-black/30">TODAY</span>
-          </div>
-
-          {/* Simulated Events */}
-          <div className="space-y-1.5 pl-2">
-            <div className="flex items-center gap-2">
-              <span className="font-mono text-xs font-semibold" style={{ color: formData.dateTimeColor || '#cfe9ff' }}>
-                09:00 AM
-              </span>
-              <span style={{ color: formData.scheduleColor || '#ffffff' }}>
-                Weekly Engineering Sync
-              </span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="font-mono text-xs font-semibold" style={{ color: formData.dateTimeColor || '#cfe9ff' }}>
-                02:30 PM
-              </span>
-              <span style={{ color: formData.scheduleColor || '#ffffff' }}>
-                Design Architecture Review
-              </span>
-            </div>
-          </div>
-        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5 text-xs">

@@ -13,7 +13,7 @@ export const PrivacyTab: React.FC = () => {
         }}
       >
         <div className="flex items-center gap-3 mb-2">
-          <div className="p-2.5 bg-emerald-500/10 text-emerald-500 rounded-xl border border-emerald-500/20">
+          <div className="p-2.5 bg-[#C44900]/15 text-[#E86711] rounded-xl border border-[#C44900]/25">
             <Shield size={20} />
           </div>
           <div>
@@ -36,7 +36,7 @@ export const PrivacyTab: React.FC = () => {
             border: '1px solid var(--menu-card-border)'
           }}
         >
-          <div className="flex items-center gap-2 text-emerald-500 font-semibold">
+          <div className="flex items-center gap-2 text-[#E86711] font-semibold">
             <HardDrive size={16} />
             <span>Local-Only Processing</span>
           </div>
@@ -45,11 +45,11 @@ export const PrivacyTab: React.FC = () => {
           </p>
           <ul className="space-y-1.5" style={{ color: 'var(--menu-text-muted)' }}>
             <li className="flex items-center gap-2">
-              <CheckCircle2 size={13} className="text-emerald-500 shrink-0" />
+              <CheckCircle2 size={13} className="text-[#E86711] shrink-0" />
               <span>No proprietary cloud servers or intermediary proxies</span>
             </li>
             <li className="flex items-center gap-2">
-              <CheckCircle2 size={13} className="text-emerald-500 shrink-0" />
+              <CheckCircle2 size={13} className="text-[#E86711] shrink-0" />
               <span>No user authentication credentials stored or requested</span>
             </li>
           </ul>
@@ -62,7 +62,7 @@ export const PrivacyTab: React.FC = () => {
             border: '1px solid var(--menu-card-border)'
           }}
         >
-          <div className="flex items-center gap-2 text-indigo-400 font-semibold">
+          <div className="flex items-center gap-2 text-[#E86711] font-semibold">
             <EyeOff size={16} />
             <span>Zero Telemetry & Analytics</span>
           </div>
@@ -71,11 +71,11 @@ export const PrivacyTab: React.FC = () => {
           </p>
           <ul className="space-y-1.5" style={{ color: 'var(--menu-text-muted)' }}>
             <li className="flex items-center gap-2">
-              <CheckCircle2 size={13} className="text-indigo-400 shrink-0" />
+              <CheckCircle2 size={13} className="text-[#E86711] shrink-0" />
               <span>Zero telemetry pings or network beacons</span>
             </li>
             <li className="flex items-center gap-2">
-              <CheckCircle2 size={13} className="text-indigo-400 shrink-0" />
+              <CheckCircle2 size={13} className="text-[#E86711] shrink-0" />
               <span>Clean open-source codebase auditable on GitHub</span>
             </li>
           </ul>
@@ -104,7 +104,7 @@ export const PrivacyTab: React.FC = () => {
             border: '1px solid var(--menu-card-border)'
           }}
         >
-          <div className="flex items-center gap-2 text-cyan-400 font-semibold">
+          <div className="flex items-center gap-2 text-[#E86711] font-semibold">
             <Lock size={16} />
             <span>Sandboxed Desktop Runtime</span>
           </div>
