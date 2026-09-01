@@ -1,65 +1,66 @@
-# Calendar Widget
+<div align="center">
 
-A lightweight, transparent desktop calendar overlay for Windows that synchronizes directly with Google Calendar via standard RFC 5545 iCal feeds. Engineered with a local-first architecture for absolute privacy, a sub-50MB RAM footprint, and instant desktop accessibility.
+# 📅 Calendar Widget
 
----
+**A lightweight, transparent desktop calendar overlay for Windows synchronized directly with Google Calendar.**
 
-## Technical Overview
+[![Release](https://img.shields.io/github/v/release/kidlatpogi/Calendar-Widget?style=for-the-badge&color=C44900)](https://github.com/kidlatpogi/Calendar-Widget/releases/latest)
+[![Platform](https://img.shields.io/badge/Platform-Windows%2010%20%7C%2011-0078D6?style=for-the-badge&logo=windows)](https://github.com/kidlatpogi/Calendar-Widget/releases/latest)
+[![Electron](https://img.shields.io/badge/Electron-34.x-47848F?style=for-the-badge&logo=electron)](https://www.electronjs.org/)
+[![React](https://img.shields.io/badge/React-18.x-61DAFB?style=for-the-badge&logo=react)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
+[![License](https://img.shields.io/badge/License-MIT%20with%20Attribution-E86711?style=for-the-badge)](LICENSE)
 
-Calendar Widget provides an ambient, always-visible timeline of upcoming schedule events directly on the Windows desktop. All feed polling, RRULE recurrence calculations, and user preferences are executed and stored 100% locally on the client machine without any intermediary cloud proxies or behavioral tracking.
+<br/>
 
-### Key Engineering Highlights
+[⬇️ **Download Latest Windows Release (.exe)**](https://github.com/kidlatpogi/Calendar-Widget/releases/latest) • [📖 **Integration Guide**](#-google-calendar-setup) • [⌨️ **Hotkeys**](#-keyboard-shortcuts) • [🛠️ **Development**](#-development--build)
 
-- **Local-First Privacy Architecture**: Calendar feeds are parsed and stored locally with zero external servers, telemetry trackers, or third-party analytics.
-- **Hardware-Accelerated DirectComposition**: Seamless per-pixel alpha transparency on Windows DWM with hardware acceleration enabled.
-- **RFC 5545 Recurrence Engine**: Robust parsing supporting `VEVENT`, complex `RRULE` (daily, weekly, monthly, yearly), `EXDATE` exclusions, and timezone normalization.
-- **Real-Time Live Customization**: Changes made in the dashboard (fonts, colors, font size, clock format, day spacing) synchronize directly to the floating calendar widget in real-time.
-- **Frameless Ambient Overlay**: Custom pointer-capture dragging across multiple monitors, click-through mode (`setIgnoreMouseEvents`), and taskbar-free presentation.
-- **Dark & Light Mode Dashboard**: High-contrast theme switching with GSAP magnetic HUD bracket cursor targeting.
-- **System Tray Integration**: Native Windows system tray support for quick toggling, click-through activation, manual refresh, and settings management.
-
----
-
-## Technology Stack
-
-| Layer | Technology | Purpose |
-| :--- | :--- | :--- |
-| **Framework** | Electron 34 | Cross-platform desktop runtime with secure Context Isolation |
-| **Language** | TypeScript 5 | Strict end-to-end type safety across Main, Preload, and Renderer |
-| **Frontend UI** | React 18 | Declarative state management and virtual DOM rendering |
-| **Styling** | Tailwind CSS & PostCSS | Atomic design system, CSS custom properties, and theme switching |
-| **Animations** | GSAP 3 | High-performance magnetic HUD bracket target cursor |
-| **Bundler** | Vite 6 | Rapid HMR development server and optimized production packaging |
-| **Distribution** | electron-builder | Windows NSIS installer and portable executable generation |
+</div>
 
 ---
 
-## Visual Showcase
+## ⚡ Technical Overview
 
-<!-- Showcase placeholders ready for updated screenshots and demo GIFs -->
+**Calendar Widget** is an ambient, always-visible desktop overlay engineered to keep your upcoming schedule in sight without context switching. Designed with a **local-first privacy architecture**, all feed synchronization, RRULE recurrence expansion, and preferences are computed directly on your PC with a **sub-50MB RAM footprint**.
+
+### 🌟 Key Features
+
+- 🔒 **100% Local-First Privacy**: Connects directly to Google Calendar via HTTPS. Zero cloud relays, zero tracking telemetry, and zero behavioral analytics.
+- 🪟 **Hardware-Accelerated DirectComposition**: Native per-pixel alpha transparency on Windows DWM that launches instantly transparent on startup.
+- ⏱️ **RFC 5545 Recurrence Engine**: Comprehensive support for `VEVENT`, complex `RRULE` (daily, weekly, monthly, yearly), `EXDATE` exception rules, and multi-timezone offsets.
+- 🎨 **Real-Time Live Customization**: Modify typography, theme swatches, font size, clock format, and day group spacing with immediate live reactivity on your desktop widget.
+- 🖱️ **Fluid Drag & Click-Through**: Move freely across monitors using custom pointer capture, or activate click-through mode (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>C</kbd>) to pass mouse clicks to background windows.
+- 🌓 **Dark & Light Mode Dashboard**: High-contrast theme engine featuring GSAP magnetic HUD bracket targeting cursor.
+- 📥 **System Tray Operations**: Native Windows taskbar tray icon for background syncing, one-click window toggles, and instant preferences access.
+
+---
+
+## 🖼️ Visual Showcase
+
+<!-- Visual showcase placeholders: Update with new screenshots and animated GIFs -->
 
 ### Desktop Timeline Overlay
 *Ambient, transparent floating widget with real-time digital clock, color-coded event states, and smooth drag repositioning.*
 
-<!-- [IMAGE PLACEHOLDER: Desktop Timeline Overlay] -->
+<!-- [PLACEHOLDER: Desktop Widget Screenshot] -->
 
 ---
 
-### Dashboard & Control Center
-*Centralized management console featuring live customization, iCal feed provisioning, interactive ATS tutorial guide, and security disclosures in both Dark and Light modes.*
+### Management Dashboard
+*Centralized control console featuring live customization, iCal feed provisioning, interactive ATS tutorial guide, and security disclosures in both Dark and Light modes.*
 
-<!-- [IMAGE PLACEHOLDER: Management Dashboard] -->
+<!-- [PLACEHOLDER: Management Dashboard Screenshot] -->
 
 ---
 
 ### Interactive Demonstrations
-*Real-time desktop reactivity, window dragging across displays, and click-through mode.*
+*Real-time desktop reactivity, multi-monitor window dragging, and click-through mode.*
 
-<!-- [GIF PLACEHOLDER: Desktop Interaction & Live Customization] -->
+<!-- [PLACEHOLDER: Live Interaction Demo GIF] -->
 
 ---
 
-## Keyboard Shortcuts & Operations
+## ⌨️ Keyboard Shortcuts
 
 | Shortcut | Action | Description |
 | :---: | :--- | :--- |
@@ -69,55 +70,65 @@ Calendar Widget provides an ambient, always-visible timeline of upcoming schedul
 
 ---
 
-## Getting Started
+## 📖 Google Calendar Setup
+
+1. **Open Google Calendar**: Navigate to [Google Calendar Settings](https://calendar.google.com/calendar/r/settings).
+2. **Select Calendar**: In the left sidebar under *"Settings for my calendars"*, click your desired calendar.
+3. **Copy Secret Address**: Scroll down to the *"Integrate calendar"* section and copy the **"Secret address in iCal format"** (`.ics` URL).
+4. **Add to Widget**: Open Calendar Widget, go to the **Calendars** tab, paste the link, and click **Add Feed**.
+
+---
+
+## 🛠️ Development & Build
 
 ### Prerequisites
-- [Node.js](https://nodejs.org/) (v18 or higher)
-- npm (v9 or higher)
+- [Node.js](https://nodejs.org/) (v18.0.0 or higher)
+- [npm](https://www.npmjs.com/) (v9.0.0 or higher)
 - Windows 10 / 11 (64-bit)
 
-### Installation & Development
+### Installation
 
 ```bash
 # Clone the repository
 git clone https://github.com/kidlatpogi/Calendar-Widget.git
 cd Calendar-Widget
 
-# Install dependencies
+# Install project dependencies
 npm install
 
-# Build TypeScript and Vite renderer
+# Compile TypeScript and Vite bundles
 npm run build
 
 # Start the application in development mode
 npm start
 ```
 
-### Packaging Production Installer
+### Packaging Windows Installer
 
 ```bash
-# Package the Windows NSIS installer (.exe) for x64
+# Package the production NSIS setup executable (.exe)
 npm run dist
 ```
 
-The output installer will be generated in the `dist/` directory as `Calendar Widget Setup 1.1.0.exe`.
+Packaged installers and unpacked binaries are generated in the `dist/` directory:
+- `dist/Calendar Widget Setup 1.1.0.exe`
 
 ---
 
-## Project Structure
+## 🏗️ Project Architecture
 
 ```
 Schedule-Widget-Electron/
 ├── assets/                          # Application icons, TTF typography, and NSIS scripts
 │   ├── Fonts/                       # Home Video & LED Dot-Matrix font assets
 │   ├── calendar.ico                 # Application window & tray icon
-│   └── uninstaller.nsh              # NSIS registry and config cleanup script
+│   └── uninstaller.nsh              # Custom NSIS registry and cleanup script
 ├── src/
 │   ├── main/                        # Electron Main Process (Node.js runtime)
 │   │   ├── index.ts                 # Lifecycle, single-instance lock, GPU flags
-│   │   ├── window-manager.ts        # Transparent DirectComposition window creation
+│   │   ├── window-manager.ts        # DirectComposition transparent window creation
 │   │   ├── config-manager.ts        # Typed configuration persistence (%APPDATA%)
-│   │   ├── ical-service.ts          # RFC 5545 parser, recurrence expansion, ETag caching
+│   │   ├── ical-service.ts          # RFC 5545 parser, RRULE recurrence expansion, ETag cache
 │   │   ├── tray-manager.ts          # Native Windows tray icon & context menus
 │   │   └── ipc-handlers.ts          # Type-safe IPC channels & live broadcast
 │   ├── preload/                     # Electron Preload Script (Context Bridge)
@@ -144,9 +155,9 @@ Schedule-Widget-Electron/
 
 ---
 
-## License
+## 📄 License
 
-This project is licensed under the custom MIT License with Attribution Requirement.
+This project is licensed under the custom **MIT License with Attribution Requirement**.
 
 ```text
 Copyright (c) 2026 Zeus Angelo Bautista
@@ -173,3 +184,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
+
+---
+
+<div align="center">
+
+Crafted with ❤️ by [**Zeus Angelo Bautista**](https://www.zeusbautista.site/)
+
+</div>

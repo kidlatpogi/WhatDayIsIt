@@ -70,7 +70,7 @@ export const TargetCursor: React.FC<TargetCursorProps> = ({
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  const constants = useMemo(() => ({ borderWidth: 2, cornerSize: 10 }), []);
+  const constants = useMemo(() => ({ borderWidth: 3, cornerSize: 12 }), []);
 
   const moveCursor = useCallback((x: number, y: number) => {
     if (!cursorRef.current) return;
@@ -98,6 +98,11 @@ export const TargetCursor: React.FC<TargetCursorProps> = ({
     const getOffset = () => containingBlockOffsetRef.current;
     let activeTarget: Element | null = null;
     let targetRect: DOMRect | null = null;
+    const updateTargetRect = () => {
+      if (activeTarget) {
+        targetRect = activeTarget.getBoundingClientRect();
+      }
+    };
     let currentLeaveHandler: (() => void) | null = null;
     let resumeTimeout: ReturnType<typeof setTimeout> | null = null;
 
@@ -170,6 +175,22 @@ export const TargetCursor: React.FC<TargetCursorProps> = ({
 
     const moveHandler = (e: MouseEvent) => moveCursor(e.clientX, e.clientY);
     window.addEventListener('mousemove', moveHandler);
+
+    const scrollHandler = () => {
+      updateTargetRect();
+      if (!activeTarget || !cursorRef.current) return;
+      const { x: offsetX, y: offsetY } = getOffset();
+      const mouseX = (gsap.getProperty(cursorRef.current, 'x') as number) + offsetX;
+      const mouseY = (gsap.getProperty(cursorRef.current, 'y') as number) + offsetY;
+      const elementUnderMouse = document.elementFromPoint(mouseX, mouseY);
+      const isStillOverTarget =
+        elementUnderMouse &&
+        (elementUnderMouse === activeTarget || elementUnderMouse.closest(targetSelector) === activeTarget);
+      if (!isStillOverTarget) {
+        currentLeaveHandler?.();
+      }
+    };
+    window.addEventListener('scroll', scrollHandler, { passive: true });
 
     const mouseDownHandler = () => {
       if (!dotRef.current) return;
@@ -294,6 +315,7 @@ export const TargetCursor: React.FC<TargetCursorProps> = ({
     const resizeHandler = () => {
       containingBlockRef.current = getContainingBlock(cursor);
       updateOffset();
+      updateTargetRect();
     };
     window.addEventListener('resize', resizeHandler);
 
@@ -303,6 +325,7 @@ export const TargetCursor: React.FC<TargetCursorProps> = ({
       }
       window.removeEventListener('mousemove', moveHandler);
       window.removeEventListener('mouseover', enterHandler as EventListener);
+      window.removeEventListener('scroll', scrollHandler);
       window.removeEventListener('resize', resizeHandler);
       window.removeEventListener('mousedown', mouseDownHandler);
       window.removeEventListener('mouseup', mouseUpHandler);
@@ -311,6 +334,9 @@ export const TargetCursor: React.FC<TargetCursorProps> = ({
       }
       spinTl.current?.kill();
       document.body.style.cursor = originalCursor;
+      isActiveRef.current = false;
+      targetCornerPositionsRef.current = null;
+      activeStrengthRef.current.current = 0;
     };
   }, [targetSelector, spinDuration, moveCursor, constants, hideDefaultCursor, isMobile, hoverDuration, parallaxOn]);
 
@@ -318,39 +344,20 @@ export const TargetCursor: React.FC<TargetCursorProps> = ({
     return null;
   }
 
-  const isLight = theme === 'light';
-  const strokeColor = isLight ? '#000000' : '#ffffff';
-  const dotColor = isLight ? '#000000' : '#ffffff';
-
+  // Exact reference from designs.md using mix-blend-difference with precision border/dot sizing
   return (
     <div
       ref={cursorRef}
-      className="fixed top-0 left-0 w-0 h-0 pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2"
+      className="fixed top-0 left-0 w-0 h-0 pointer-events-none z-[9999] mix-blend-difference -translate-x-1/2 -translate-y-1/2"
     >
       <div
         ref={dotRef}
-        className="absolute left-1/2 top-1/2 w-1.5 h-1.5 rounded-full -translate-x-1/2 -translate-y-1/2 will-change-transform"
-        style={{
-          backgroundColor: dotColor,
-          boxShadow: isLight ? '0 0 6px rgba(0,0,0,0.4)' : '0 0 8px rgba(255,255,255,0.8)'
-        }}
+        className="absolute left-1/2 top-1/2 w-1 h-1 bg-white rounded-full -translate-x-1/2 -translate-y-1/2 will-change-transform"
       />
-      <div
-        className="target-cursor-corner corner-tl absolute left-1/2 top-1/2 w-2.5 h-2.5 will-change-transform border-r-0 border-b-0 -translate-x-[150%] -translate-y-[150%]"
-        style={{ borderWidth: '2px', borderStyle: 'solid', borderColor: strokeColor }}
-      />
-      <div
-        className="target-cursor-corner corner-tr absolute left-1/2 top-1/2 w-2.5 h-2.5 will-change-transform border-l-0 border-b-0 translate-x-[50%] -translate-y-[150%]"
-        style={{ borderWidth: '2px', borderStyle: 'solid', borderColor: strokeColor }}
-      />
-      <div
-        className="target-cursor-corner corner-br absolute left-1/2 top-1/2 w-2.5 h-2.5 will-change-transform border-l-0 border-t-0 translate-x-[50%] translate-y-[50%]"
-        style={{ borderWidth: '2px', borderStyle: 'solid', borderColor: strokeColor }}
-      />
-      <div
-        className="target-cursor-corner corner-bl absolute left-1/2 top-1/2 w-2.5 h-2.5 will-change-transform border-r-0 border-t-0 -translate-x-[150%] translate-y-[50%]"
-        style={{ borderWidth: '2px', borderStyle: 'solid', borderColor: strokeColor }}
-      />
+      <div className="target-cursor-corner corner-tl absolute left-1/2 top-1/2 w-3 h-3 border-[3px] border-white will-change-transform border-r-0 border-b-0 -translate-x-[150%] -translate-y-[150%]" />
+      <div className="target-cursor-corner corner-tr absolute left-1/2 top-1/2 w-3 h-3 border-[3px] border-white will-change-transform border-l-0 border-b-0 translate-x-[50%] -translate-y-[150%]" />
+      <div className="target-cursor-corner corner-br absolute left-1/2 top-1/2 w-3 h-3 border-[3px] border-white will-change-transform border-l-0 border-t-0 translate-x-[50%] translate-y-[50%]" />
+      <div className="target-cursor-corner corner-bl absolute left-1/2 top-1/2 w-3 h-3 border-[3px] border-white will-change-transform border-r-0 border-t-0 -translate-x-[150%] translate-y-[50%]" />
     </div>
   );
 };
