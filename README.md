@@ -4,8 +4,8 @@
 
 **A lightweight, transparent desktop calendar overlay for Windows synchronized directly with Google Calendar.**
 
-[![Download Latest Release](https://img.shields.io/github/v/release/kidlatpogi/Calendar-Widget?label=Download%20Latest&color=brightgreen&style=for-the-badge&logo=github)](https://github.com/kidlatpogi/Calendar-Widget/releases/latest)
-[![Platform](https://img.shields.io/badge/Platform-Windows%2010%20%7C%2011-0078D6?style=for-the-badge&logo=windows)](https://github.com/kidlatpogi/Calendar-Widget/releases/latest)
+[![Download Latest Release](https://img.shields.io/github/v/release/kidlatpogi/WhatDayIsIt?label=Download%20Latest&color=brightgreen&style=for-the-badge&logo=github)](https://github.com/kidlatpogi/WhatDayIsIt/releases/latest)
+[![Platform](https://img.shields.io/badge/Platform-Windows%2010%20%7C%2011-0078D6?style=for-the-badge&logo=windows)](https://github.com/kidlatpogi/WhatDayIsIt/releases/latest)
 [![Electron](https://img.shields.io/badge/Electron-34.x-47848F?style=for-the-badge&logo=electron)](https://www.electronjs.org/)
 [![React](https://img.shields.io/badge/React-18.x-61DAFB?style=for-the-badge&logo=react)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
@@ -13,7 +13,7 @@
 
 <br/>
 
-[**Download Installer (.exe)**](https://github.com/kidlatpogi/Calendar-Widget/releases/latest) • [**Why I Built This**](#-why-i-built-this) • [**Keybinds**](#%EF%B8%8F-keybinds) • [**Setup Guide**](#google-calendar-setup) • [**Development**](#development--build)
+[**Download Installer (.exe)**](https://github.com/kidlatpogi/WhatDayIsIt/releases/latest) • [**Why I Built This**](#-why-i-built-this) • [**Keybinds**](#%EF%B8%8F-keybinds) • [**Setup Guide**](#google-calendar-setup) • [**Development**](#development--build)
 
 </div>
 
@@ -101,8 +101,8 @@ That’s how this widget was born.
 
 ```bash
 # Clone the repository
-git clone https://github.com/kidlatpogi/Calendar-Widget.git
-cd Calendar-Widget
+git clone https://github.com/kidlatpogi/WhatDayIsIt.git
+cd WhatDayIsIt
 
 # Install project dependencies
 npm install
