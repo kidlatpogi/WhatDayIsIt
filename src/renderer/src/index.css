@@ -1,0 +1,133 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Home Video';
+  src: url('./assets/fonts/HomeVideo-BLG6G.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'LED Dot-Matrix';
+  src: url('./assets/fonts/LED Dot-Matrix 400.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --app-font-family: "Segoe UI", Arial, sans-serif;
+  --app-font-size: 14px;
+  --app-font-small: 11px;
+  --app-font-large: 15px;
+  --schedule-color: #ffffff;
+  --date-time-color: #cfe9ff;
+  --highlight-color: #a3ff33;
+  --highlight-rgba: rgba(163, 255, 51, 0.12);
+  --ongoing-color: #a3ff33;
+  --ongoing-rgba: rgba(163, 255, 51, 0.12);
+  --upcoming-color: #a3ff33;
+  --upcoming-rgba: rgba(163, 255, 51, 0.12);
+  --day-color: #ffffff;
+  --date-color: #cfe9ff;
+  --date-spacing: 16px;
+  --clock-color: #ffffff;
+  --clock-font-family: "Segoe UI", Arial, sans-serif;
+  --clock-size: 18px;
+  --clock-alignment: left;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  font-family: var(--app-font-family);
+  font-size: var(--app-font-size);
+  color: rgba(255, 255, 255, 0.95);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Draggable regions for frameless transparent windows */
+.drag-region {
+  -webkit-app-region: drag;
+}
+
+.no-drag-region {
+  -webkit-app-region: no-drag;
+}
+
+/* Custom modern scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* Glassmorphic card styling */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+/* Button glow and transitions */
+.btn-glass {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: all 0.15s ease;
+}
+
+.btn-glass:hover {
+  transform: translateY(-1px);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.04));
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+}
+
+.btn-primary {
+  background: linear-gradient(180deg, #8c9eff, #5f72e4);
+  border: 1px solid #5f72e4;
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: 0 4px 16px rgba(95, 114, 228, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transition: all 0.15s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(95, 114, 228, 0.5);
+}
+
+.btn-primary:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}

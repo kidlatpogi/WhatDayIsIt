@@ -1,7 +1,11 @@
 # Node / project
 node_modules/
 dist/
+dist-electron/
 build/
 
 # Local config - do NOT commit
 config.json
+
+# Logs
+*.log
