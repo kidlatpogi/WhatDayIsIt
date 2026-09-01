@@ -23,11 +23,6 @@
   --color-accent: #C44900;
   --color-accent-hover: #E86711;
   --color-accent-active: #D65408;
-  --color-surface: #141313;
-  --color-surface-dim: #101010;
-  --color-surface-container: #201f1f;
-  --color-surface-container-low: #1c1b1b;
-  --color-surface-container-high: #2a2a2a;
   
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'Roboto Mono', monospace;
@@ -52,20 +47,53 @@
   --clock-font-family: "Segoe UI", Arial, sans-serif;
   --clock-size: 18px;
   --clock-alignment: left;
+
+  /* Theme Tokens: Dark (Default) */
+  --menu-bg: #141313;
+  --menu-header-bg: rgba(20, 19, 19, 0.92);
+  --menu-surface: #1c1b1b;
+  --menu-surface-border: rgba(255, 255, 255, 0.08);
+  --menu-surface-hover: #232222;
+  --menu-input-bg: #101010;
+  --menu-input-border: rgba(255, 255, 255, 0.14);
+  --menu-text-primary: #ffffff;
+  --menu-text-secondary: rgba(255, 255, 255, 0.7);
+  --menu-text-muted: rgba(255, 255, 255, 0.45);
+  --menu-nav-bg: #1c1b1b;
+  --menu-nav-border: rgba(255, 255, 255, 0.1);
+  --menu-card-border: rgba(255, 255, 255, 0.08);
+  --menu-divider: rgba(255, 255, 255, 0.08);
+}
+
+.theme-light {
+  /* Theme Tokens: Light */
+  --menu-bg: #f8f8f8;
+  --menu-header-bg: rgba(248, 248, 248, 0.92);
+  --menu-surface: #ffffff;
+  --menu-surface-border: rgba(0, 0, 0, 0.08);
+  --menu-surface-hover: #f1f5f9;
+  --menu-input-bg: #f1f5f9;
+  --menu-input-border: rgba(0, 0, 0, 0.12);
+  --menu-text-primary: #0f172a;
+  --menu-text-secondary: #334155;
+  --menu-text-muted: #64748b;
+  --menu-nav-bg: #ffffff;
+  --menu-nav-border: rgba(0, 0, 0, 0.08);
+  --menu-card-border: rgba(0, 0, 0, 0.08);
+  --menu-divider: rgba(0, 0, 0, 0.08);
 }
 
 html, body, #root {
   background: transparent !important;
   font-family: var(--font-sans);
-  color: rgba(255, 255, 255, 0.95);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 /* Custom Scrollbars */
 ::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -73,12 +101,12 @@ html, body, #root {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.12);
-  border-radius: 4px;
+  background: rgba(120, 120, 120, 0.25);
+  border-radius: 6px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(196, 73, 0, 0.7);
 }
 
 /* Button & Card utilities conforming to designs.md */
@@ -87,13 +115,13 @@ html, body, #root {
   color: #ffffff;
   font-weight: 600;
   border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 4px 14px rgba(196, 73, 0, 0.35);
+  box-shadow: 0 4px 14px rgba(196, 73, 0, 0.3);
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-accent:hover {
   background: linear-gradient(135deg, #D65408 0%, #F57C20 100%);
-  box-shadow: 0 6px 20px rgba(196, 73, 0, 0.5);
+  box-shadow: 0 6px 20px rgba(196, 73, 0, 0.45);
   transform: translateY(-1px);
 }
 
@@ -102,22 +130,23 @@ html, body, #root {
 }
 
 .btn-surface {
-  background: #201f1f;
-  color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--menu-surface);
+  color: var(--menu-text-primary);
+  border: 1px solid var(--menu-surface-border);
   transition: all 0.2s ease;
 }
 
 .btn-surface:hover {
-  background: #2a2a2a;
-  border-color: rgba(255, 255, 255, 0.18);
+  background: var(--menu-surface-hover);
+  border-color: rgba(196, 73, 0, 0.4);
   transform: translateY(-1px);
 }
 
 .card-surface {
-  background: #1c1b1b;
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  background: var(--menu-surface);
+  color: var(--menu-text-primary);
+  border: 1px solid var(--menu-card-border);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
 .badge-mono {
@@ -126,4 +155,9 @@ html, body, #root {
   letter-spacing: 0.08em;
   font-size: 10px;
   font-weight: 600;
+}
+
+/* Cursor target for magnetic HUD cursor */
+.cursor-target {
+  cursor: pointer;
 }

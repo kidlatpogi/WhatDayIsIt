@@ -64,24 +64,34 @@ export const CalendarsTab: React.FC<CalendarsTabProps> = ({
   };
 
   return (
-    <div className="space-y-6 animate-fade-in text-white">
+    <div className="space-y-6 animate-fade-in pb-20">
       {/* Add Calendar Box */}
-      <div className="card-surface rounded-2xl p-6 border border-white/10 space-y-4">
+      <div
+        className="card-surface rounded-2xl p-6 space-y-4 cursor-target transition-colors duration-200"
+        style={{
+          backgroundColor: 'var(--menu-surface)',
+          border: '1px solid var(--menu-card-border)'
+        }}
+      >
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-lg bg-[#C44900]/20 text-[#E86711]">
+            <div className="p-2 rounded-lg bg-[#C44900]/15 text-[#E86711]">
               <Plus size={18} />
             </div>
             <div>
-              <h3 className="text-base font-bold text-white">Add Google Calendar Feed</h3>
-              <p className="text-xs text-white/60">Paste your secret or public iCal (.ics) URL</p>
+              <h3 className="text-base font-bold" style={{ color: 'var(--menu-text-primary)' }}>
+                Add Google Calendar Feed
+              </h3>
+              <p className="text-xs" style={{ color: 'var(--menu-text-muted)' }}>
+                Paste your secret or public iCal (.ics) URL
+              </p>
             </div>
           </div>
 
           <button
             type="button"
             onClick={handleOpenTutorial}
-            className="flex items-center gap-1.5 text-xs text-[#E86711] hover:text-[#FF9436] transition-colors cursor-pointer"
+            className="flex items-center gap-1.5 text-xs text-[#E86711] hover:text-[#FF9436] transition-colors cursor-target cursor-pointer font-semibold"
           >
             <HelpCircle size={14} />
             <span>How to find iCal link?</span>
@@ -94,13 +104,18 @@ export const CalendarsTab: React.FC<CalendarsTabProps> = ({
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             placeholder="https://calendar.google.com/calendar/ical/..."
-            className="flex-1 bg-[#101010] border border-white/15 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder:text-white/30 outline-none focus:border-[#C44900] transition-colors font-mono"
+            className="flex-1 rounded-xl px-3.5 py-2.5 text-xs outline-none focus:border-[#C44900] transition-colors font-mono cursor-target"
+            style={{
+              backgroundColor: 'var(--menu-input-bg)',
+              border: '1px solid var(--menu-input-border)',
+              color: 'var(--menu-text-primary)'
+            }}
           />
 
           <button
             type="submit"
             disabled={isAdding}
-            className="btn-accent px-5 py-2.5 rounded-xl text-xs flex items-center justify-center gap-2 cursor-pointer whitespace-nowrap disabled:opacity-50"
+            className="btn-accent px-5 py-2.5 rounded-xl text-xs flex items-center justify-center gap-2 cursor-target cursor-pointer whitespace-nowrap disabled:opacity-50"
           >
             <Plus size={14} />
             <span>{isAdding ? 'Adding...' : 'Add Feed'}</span>
@@ -111,8 +126,8 @@ export const CalendarsTab: React.FC<CalendarsTabProps> = ({
           <div
             className={`flex items-center gap-2 text-xs p-3 rounded-lg border ${
               feedback.type === 'success'
-                ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
-                : 'bg-red-500/10 text-red-400 border-red-500/20'
+                ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20'
+                : 'bg-red-500/10 text-red-500 border-red-500/20'
             }`}
           >
             {feedback.type === 'success' ? <CheckCircle2 size={15} /> : <AlertCircle size={15} />}
@@ -122,21 +137,29 @@ export const CalendarsTab: React.FC<CalendarsTabProps> = ({
       </div>
 
       {/* Connected Feeds List */}
-      <div className="card-surface rounded-2xl p-6 border border-white/10 space-y-4">
-        <div className="flex items-center justify-between pb-3 border-b border-white/5">
+      <div
+        className="card-surface rounded-2xl p-6 space-y-4 cursor-target transition-colors duration-200"
+        style={{
+          backgroundColor: 'var(--menu-surface)',
+          border: '1px solid var(--menu-card-border)'
+        }}
+      >
+        <div className="flex items-center justify-between pb-3 border-b" style={{ borderColor: 'var(--menu-divider)' }}>
           <div className="flex items-center gap-2">
             <Calendar size={16} className="text-[#E86711]" />
-            <h3 className="text-sm font-bold uppercase tracking-wider text-white">
+            <h3 className="text-sm font-bold uppercase tracking-wider" style={{ color: 'var(--menu-text-primary)' }}>
               Connected Calendars ({icals.length})
             </h3>
           </div>
-          <span className="badge-mono text-white/40">RFC 5545 SYNC</span>
+          <span className="badge-mono" style={{ color: 'var(--menu-text-muted)' }}>
+            RFC 5545 SYNC
+          </span>
         </div>
 
         {icals.length === 0 ? (
-          <div className="py-8 text-center text-xs text-white/40 space-y-1">
+          <div className="py-8 text-center text-xs space-y-1" style={{ color: 'var(--menu-text-muted)' }}>
             <p>No calendar feeds currently added.</p>
-            <p className="text-[11px] text-white/30">
+            <p className="text-[11px]">
               Add your Google Calendar URL above to display upcoming events.
             </p>
           </div>
@@ -150,28 +173,43 @@ export const CalendarsTab: React.FC<CalendarsTabProps> = ({
               return (
                 <div
                   key={idx}
-                  className="flex flex-col sm:flex-row sm:items-center justify-between p-3.5 bg-[#101010] rounded-xl border border-white/5 gap-3 hover:border-white/10 transition-colors"
+                  className="flex flex-col sm:flex-row sm:items-center justify-between p-3.5 rounded-xl gap-3 transition-colors cursor-target"
+                  style={{
+                    backgroundColor: 'var(--menu-input-bg)',
+                    border: '1px solid var(--menu-surface-border)'
+                  }}
                 >
                   <div className="space-y-1 min-w-0 flex-1">
                     <div className="flex items-center gap-2">
-                      <span className="badge-mono text-[9px] px-1.5 py-0.5 rounded bg-white/10 text-white/80">
+                      <span
+                        className="badge-mono text-[9px] px-1.5 py-0.5 rounded font-bold"
+                        style={{
+                          backgroundColor: 'var(--menu-surface)',
+                          color: 'var(--menu-text-secondary)',
+                          border: '1px solid var(--menu-surface-border)'
+                        }}
+                      >
                         FEED {idx + 1}
                       </span>
                       <span
-                        className="text-xs font-semibold text-white truncate font-mono"
+                        className="text-xs font-semibold truncate font-mono"
+                        style={{ color: 'var(--menu-text-primary)' }}
                         title={ical.url}
                       >
                         {getMaskedLabel(ical.url, idx)}
                       </span>
                     </div>
 
-                    <div className="text-[11px] text-white/40 truncate font-mono">
+                    <div className="text-[11px] truncate font-mono" style={{ color: 'var(--menu-text-muted)' }}>
                       {ical.url}
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-between sm:justify-end gap-3 shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-white/5">
-                    <span className="text-[10px] text-white/40">
+                  <div
+                    className="flex items-center justify-between sm:justify-end gap-3 shrink-0 pt-2 sm:pt-0 sm:border-t-0"
+                    style={{ borderTop: '1px solid var(--menu-divider)' }}
+                  >
+                    <span className="text-[10px]" style={{ color: 'var(--menu-text-muted)' }}>
                       Sync: {lastChecked}
                     </span>
 
@@ -182,7 +220,7 @@ export const CalendarsTab: React.FC<CalendarsTabProps> = ({
                           onDeleteIcal(ical.url);
                         }
                       }}
-                      className="p-2 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500/20 hover:text-red-300 border border-red-500/20 transition-colors cursor-pointer"
+                      className="p-2 rounded-lg bg-red-500/10 text-red-500 hover:bg-red-500/20 border border-red-500/20 transition-colors cursor-target cursor-pointer"
                       title="Delete calendar feed"
                     >
                       <Trash2 size={14} />

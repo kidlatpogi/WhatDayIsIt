@@ -5,8 +5,7 @@ import { WindowManager } from './window-manager';
 import { TrayManager } from './tray-manager';
 import { setupIpcHandlers } from './ipc-handlers';
 
-// Optimize memory for lightweight desktop widget
-app.disableHardwareAcceleration();
+// Hardware acceleration is preserved for native Windows DirectComposition DWM transparency
 app.commandLine.appendSwitch('v8-cache-options', 'none');
 
 // Single instance lock

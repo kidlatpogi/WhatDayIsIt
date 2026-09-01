@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { UIConfig } from '../../../../types';
 import { applyCssVariables } from '../../utils/colors';
-import { Sliders, Type, Palette, Clock, CheckSquare, Sparkles, Check, Save } from 'lucide-react';
+import { Sliders, Type, Palette, Clock, CheckSquare, Sparkles, Check, Save, Eye } from 'lucide-react';
 
 interface SettingsTabProps {
   initialUI: UIConfig;
@@ -17,10 +17,18 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({ initialUI, onSave }) =
     setFormData({ ...initialUI });
   }, [initialUI]);
 
+  // Real-time live update across all windows as settings change
   const handleChange = (key: keyof UIConfig, value: any) => {
     const next = { ...formData, [key]: value };
     setFormData(next);
     applyCssVariables(next);
+
+    // Broadcast live to floating widget in real time
+    try {
+      window.electronAPI?.setConfig(next);
+    } catch {
+      // ignore
+    }
   };
 
   const handleSave = async () => {
@@ -28,7 +36,7 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({ initialUI, onSave }) =
       setIsSaving(true);
       await onSave(formData);
       setSavedSuccess(true);
-      setTimeout(() => setSavedSuccess(false), 2500);
+      setTimeout(() => setSavedSuccess(false), 3000);
     } catch (e: any) {
       alert('Failed to save settings: ' + e?.message);
     } finally {
@@ -47,40 +55,139 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({ initialUI, onSave }) =
   ];
 
   return (
-    <div className="space-y-6 animate-fade-in text-white pb-16">
-      {/* Sticky Save Banner */}
-      <div className="sticky top-0 z-20 flex items-center justify-between p-3.5 bg-[#141313]/90 backdrop-blur-md rounded-2xl border border-white/10 shadow-xl">
-        <div className="flex items-center gap-2 text-xs text-white/70">
+    <div className="space-y-6 animate-fade-in pb-20">
+      {/* Sticky Save Confirmation Banner */}
+      <div
+        className="sticky top-0 z-20 flex items-center justify-between p-3.5 backdrop-blur-md rounded-2xl shadow-xl transition-colors duration-200"
+        style={{
+          backgroundColor: 'var(--menu-header-bg)',
+          border: '1px solid var(--menu-card-border)'
+        }}
+      >
+        <div className="flex items-center gap-2 text-xs" style={{ color: 'var(--menu-text-secondary)' }}>
           <Sparkles size={14} className="text-[#E86711]" />
-          <span>Adjust settings with instant live preview. Click save to persist.</span>
+          <span>Real-time Live Sync active: Adjustments update the desktop widget instantly.</span>
         </div>
 
         <button
           type="button"
           onClick={handleSave}
           disabled={isSaving}
-          className="btn-accent px-5 py-2 rounded-xl text-xs flex items-center gap-2 cursor-pointer shadow-lg disabled:opacity-50"
+          className={`px-5 py-2 rounded-xl text-xs flex items-center gap-2 cursor-target cursor-pointer shadow-lg transition-all ${
+            savedSuccess
+              ? 'bg-emerald-600 text-white shadow-emerald-900/30'
+              : 'btn-accent'
+          } disabled:opacity-50`}
         >
           {savedSuccess ? <Check size={14} /> : <Save size={14} />}
-          <span>{savedSuccess ? 'Saved!' : isSaving ? 'Saving...' : 'Save Settings'}</span>
+          <span>{savedSuccess ? 'Settings Saved & Synced!' : isSaving ? 'Saving...' : 'Save Settings'}</span>
         </button>
+      </div>
+
+      {/* Real-time Widget Simulation Card */}
+      <div
+        className="card-surface rounded-2xl p-5 space-y-3 cursor-target transition-colors duration-200"
+        style={{
+          backgroundColor: 'var(--menu-surface)',
+          border: '1px solid var(--menu-card-border)'
+        }}
+      >
+        <div className="flex items-center justify-between pb-2 border-b" style={{ borderColor: 'var(--menu-divider)' }}>
+          <div className="flex items-center gap-2">
+            <Eye size={15} className="text-[#E86711]" />
+            <h3 className="font-bold uppercase tracking-wider text-xs" style={{ color: 'var(--menu-text-primary)' }}>
+              Real-Time Desktop Widget Preview
+            </h3>
+          </div>
+          <span className="badge-mono text-[9px] px-2 py-0.5 rounded bg-[#C44900]/15 text-[#E86711]">
+            LIVE FEEDBACK
+          </span>
+        </div>
+
+        <div
+          className="p-4 rounded-xl space-y-2.5 transition-all"
+          style={{
+            backgroundColor: 'rgba(0, 0, 0, 0.45)',
+            fontFamily: formData.fontFamily ? `"${formData.fontFamily}", sans-serif` : 'var(--font-sans)',
+            fontSize: `${formData.fontSize ?? 14}px`
+          }}
+        >
+          {/* Simulated Clock */}
+          {formData.showClock !== false && (
+            <div
+              className="font-bold text-base pb-1"
+              style={{
+                color: formData.clockColor || '#ffffff',
+                fontFamily: formData.clockFontFamily ? `"${formData.clockFontFamily}", sans-serif` : 'var(--font-sans)',
+                textAlign: (formData.clockAlignment as any) || 'left'
+              }}
+            >
+              {formData.clock12Hour ? '12:00 PM' : '12:00'}
+            </div>
+          )}
+
+          {/* Today Header */}
+          <div
+            className="p-2 rounded-lg font-bold flex items-center justify-between"
+            style={{
+              backgroundColor: formData.highlightColor ? `${formData.highlightColor}20` : 'rgba(163, 255, 51, 0.15)',
+              color: formData.highlightColor || '#a3ff33'
+            }}
+          >
+            <span>Tuesday <span style={{ color: formData.dateColor || '#cfe9ff', fontWeight: 'normal' }}>Sep 1, 2026</span></span>
+            <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-black/30">TODAY</span>
+          </div>
+
+          {/* Simulated Events */}
+          <div className="space-y-1.5 pl-2">
+            <div className="flex items-center gap-2">
+              <span className="font-mono text-xs font-semibold" style={{ color: formData.dateTimeColor || '#cfe9ff' }}>
+                09:00 AM
+              </span>
+              <span style={{ color: formData.scheduleColor || '#ffffff' }}>
+                Weekly Engineering Sync
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="font-mono text-xs font-semibold" style={{ color: formData.dateTimeColor || '#cfe9ff' }}>
+                02:30 PM
+              </span>
+              <span style={{ color: formData.scheduleColor || '#ffffff' }}>
+                Design Architecture Review
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5 text-xs">
         {/* Card 1: Typography Engine */}
-        <div className="card-surface rounded-2xl p-5 border border-white/10 space-y-4">
-          <div className="flex items-center gap-2 pb-2 border-b border-white/5">
+        <div
+          className="card-surface rounded-2xl p-5 space-y-4 cursor-target transition-colors duration-200"
+          style={{
+            backgroundColor: 'var(--menu-surface)',
+            border: '1px solid var(--menu-card-border)'
+          }}
+        >
+          <div className="flex items-center gap-2 pb-2 border-b" style={{ borderColor: 'var(--menu-divider)' }}>
             <Type size={16} className="text-[#E86711]" />
-            <h3 className="font-bold uppercase tracking-wider text-xs">Typography Engine</h3>
+            <h3 className="font-bold uppercase tracking-wider text-xs" style={{ color: 'var(--menu-text-primary)' }}>
+              Typography Engine
+            </h3>
           </div>
 
           <div className="space-y-3">
             <div className="space-y-1">
-              <label className="text-white/70">Font Family:</label>
+              <label style={{ color: 'var(--menu-text-secondary)' }}>Font Family:</label>
               <select
                 value={formData.fontFamily || 'Segoe UI'}
                 onChange={(e) => handleChange('fontFamily', e.target.value)}
-                className="w-full bg-[#101010] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-[#C44900]"
+                className="w-full rounded-xl px-3 py-2 outline-none focus:border-[#C44900] cursor-pointer transition-colors"
+                style={{
+                  backgroundColor: 'var(--menu-input-bg)',
+                  border: '1px solid var(--menu-input-border)',
+                  color: 'var(--menu-text-primary)'
+                }}
               >
                 {fontOptions.map((font) => (
                   <option key={font} value={font}>
@@ -92,8 +199,10 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({ initialUI, onSave }) =
 
             <div className="space-y-1">
               <div className="flex justify-between">
-                <label className="text-white/70">Font Size:</label>
-                <span className="font-mono text-white/90">{formData.fontSize ?? 14}px</span>
+                <label style={{ color: 'var(--menu-text-secondary)' }}>Font Size:</label>
+                <span className="font-mono font-bold" style={{ color: 'var(--menu-text-primary)' }}>
+                  {formData.fontSize ?? 14}px
+                </span>
               </div>
               <input
                 type="range"
@@ -104,34 +213,33 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({ initialUI, onSave }) =
                 className="w-full accent-[#C44900] cursor-pointer"
               />
             </div>
-
-            {/* Live Typography Preview */}
-            <div
-              className="p-3 bg-black/40 rounded-xl border border-white/5 space-y-1"
-              style={{
-                fontFamily: formData.fontFamily ? `"${formData.fontFamily}", sans-serif` : 'var(--font-sans)',
-                fontSize: `${formData.fontSize ?? 14}px`
-              }}
-            >
-              <div className="text-white/50 text-[10px] uppercase font-sans">Live Typography Preview:</div>
-              <div style={{ color: formData.dayColor || '#ffffff' }}>Tuesday, Sep 1</div>
-              <div style={{ color: formData.scheduleColor || '#ffffff' }}>
-                <span style={{ color: formData.dateTimeColor || '#cfe9ff' }}>10:00 AM</span> • Project Standup
-              </div>
-            </div>
           </div>
         </div>
 
         {/* Card 2: Color Palette */}
-        <div className="card-surface rounded-2xl p-5 border border-white/10 space-y-4">
-          <div className="flex items-center gap-2 pb-2 border-b border-white/5">
+        <div
+          className="card-surface rounded-2xl p-5 space-y-4 cursor-target transition-colors duration-200"
+          style={{
+            backgroundColor: 'var(--menu-surface)',
+            border: '1px solid var(--menu-card-border)'
+          }}
+        >
+          <div className="flex items-center gap-2 pb-2 border-b" style={{ borderColor: 'var(--menu-divider)' }}>
             <Palette size={16} className="text-[#E86711]" />
-            <h3 className="font-bold uppercase tracking-wider text-xs">Color Theme & Swatches</h3>
+            <h3 className="font-bold uppercase tracking-wider text-xs" style={{ color: 'var(--menu-text-primary)' }}>
+              Color Theme & Swatches
+            </h3>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
-            <div className="flex items-center justify-between p-2.5 bg-[#101010] rounded-xl border border-white/5">
-              <span className="text-white/70">Event Title</span>
+            <div
+              className="flex items-center justify-between p-2.5 rounded-xl cursor-target"
+              style={{
+                backgroundColor: 'var(--menu-input-bg)',
+                border: '1px solid var(--menu-surface-border)'
+              }}
+            >
+              <span style={{ color: 'var(--menu-text-secondary)' }}>Event Title</span>
               <input
                 type="color"
                 value={formData.scheduleColor || '#ffffff'}
@@ -140,8 +248,14 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({ initialUI, onSave }) =
               />
             </div>
 
-            <div className="flex items-center justify-between p-2.5 bg-[#101010] rounded-xl border border-white/5">
-              <span className="text-white/70">Time Stamp</span>
+            <div
+              className="flex items-center justify-between p-2.5 rounded-xl cursor-target"
+              style={{
+                backgroundColor: 'var(--menu-input-bg)',
+                border: '1px solid var(--menu-surface-border)'
+              }}
+            >
+              <span style={{ color: 'var(--menu-text-secondary)' }}>Time Stamp</span>
               <input
                 type="color"
                 value={formData.dateTimeColor || '#cfe9ff'}
@@ -150,8 +264,14 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({ initialUI, onSave }) =
               />
             </div>
 
-            <div className="flex items-center justify-between p-2.5 bg-[#101010] rounded-xl border border-white/5">
-              <span className="text-white/70">Highlight / Today</span>
+            <div
+              className="flex items-center justify-between p-2.5 rounded-xl cursor-target"
+              style={{
+                backgroundColor: 'var(--menu-input-bg)',
+                border: '1px solid var(--menu-surface-border)'
+              }}
+            >
+              <span style={{ color: 'var(--menu-text-secondary)' }}>Highlight / Today</span>
               <input
                 type="color"
                 value={formData.highlightColor || '#a3ff33'}
@@ -160,8 +280,14 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({ initialUI, onSave }) =
               />
             </div>
 
-            <div className="flex items-center justify-between p-2.5 bg-[#101010] rounded-xl border border-white/5">
-              <span className="text-white/70">Day Header</span>
+            <div
+              className="flex items-center justify-between p-2.5 rounded-xl cursor-target"
+              style={{
+                backgroundColor: 'var(--menu-input-bg)',
+                border: '1px solid var(--menu-surface-border)'
+              }}
+            >
+              <span style={{ color: 'var(--menu-text-secondary)' }}>Day Header</span>
               <input
                 type="color"
                 value={formData.dayColor || '#ffffff'}
@@ -170,8 +296,14 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({ initialUI, onSave }) =
               />
             </div>
 
-            <div className="flex items-center justify-between p-2.5 bg-[#101010] rounded-xl border border-white/5">
-              <span className="text-white/70">Date Subtext</span>
+            <div
+              className="flex items-center justify-between p-2.5 rounded-xl cursor-target"
+              style={{
+                backgroundColor: 'var(--menu-input-bg)',
+                border: '1px solid var(--menu-surface-border)'
+              }}
+            >
+              <span style={{ color: 'var(--menu-text-secondary)' }}>Date Subtext</span>
               <input
                 type="color"
                 value={formData.dateColor || '#cfe9ff'}
@@ -180,8 +312,14 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({ initialUI, onSave }) =
               />
             </div>
 
-            <div className="flex items-center justify-between p-2.5 bg-[#101010] rounded-xl border border-white/5">
-              <span className="text-white/70">Upcoming Event</span>
+            <div
+              className="flex items-center justify-between p-2.5 rounded-xl cursor-target"
+              style={{
+                backgroundColor: 'var(--menu-input-bg)',
+                border: '1px solid var(--menu-surface-border)'
+              }}
+            >
+              <span style={{ color: 'var(--menu-text-secondary)' }}>Upcoming Event</span>
               <input
                 type="color"
                 value={formData.upcomingColor || '#a3ff33'}
@@ -193,30 +331,43 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({ initialUI, onSave }) =
         </div>
 
         {/* Card 3: Digital Clock Display */}
-        <div className="card-surface rounded-2xl p-5 border border-white/10 space-y-4">
-          <div className="flex items-center gap-2 pb-2 border-b border-white/5">
+        <div
+          className="card-surface rounded-2xl p-5 space-y-4 cursor-target transition-colors duration-200"
+          style={{
+            backgroundColor: 'var(--menu-surface)',
+            border: '1px solid var(--menu-card-border)'
+          }}
+        >
+          <div className="flex items-center gap-2 pb-2 border-b" style={{ borderColor: 'var(--menu-divider)' }}>
             <Clock size={16} className="text-[#E86711]" />
-            <h3 className="font-bold uppercase tracking-wider text-xs">Digital Clock Header</h3>
+            <h3 className="font-bold uppercase tracking-wider text-xs" style={{ color: 'var(--menu-text-primary)' }}>
+              Digital Clock Header
+            </h3>
           </div>
 
           <div className="space-y-3">
-            <label className="flex items-center gap-2.5 cursor-pointer select-none">
+            <label className="flex items-center gap-2.5 cursor-pointer select-none cursor-target">
               <input
                 type="checkbox"
                 checked={formData.showClock !== false}
                 onChange={(e) => handleChange('showClock', e.target.checked)}
-                className="rounded border-white/20 bg-white/5 accent-[#C44900] w-4 h-4 cursor-pointer"
+                className="rounded accent-[#C44900] w-4 h-4 cursor-pointer"
               />
-              <span>Show Digital Clock on Today&apos;s Card</span>
+              <span style={{ color: 'var(--menu-text-primary)' }}>Show Digital Clock on Today&apos;s Card</span>
             </label>
 
             <div className="grid grid-cols-2 gap-3 pt-1">
               <div className="space-y-1">
-                <label className="text-white/70">Clock Font:</label>
+                <label style={{ color: 'var(--menu-text-secondary)' }}>Clock Font:</label>
                 <select
                   value={formData.clockFontFamily || 'Segoe UI'}
                   onChange={(e) => handleChange('clockFontFamily', e.target.value)}
-                  className="w-full bg-[#101010] border border-white/15 rounded-xl px-3 py-1.5 text-white outline-none"
+                  className="w-full rounded-xl px-3 py-1.5 outline-none cursor-pointer"
+                  style={{
+                    backgroundColor: 'var(--menu-input-bg)',
+                    border: '1px solid var(--menu-input-border)',
+                    color: 'var(--menu-text-primary)'
+                  }}
                 >
                   {fontOptions.map((font) => (
                     <option key={font} value={font}>
@@ -227,11 +378,16 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({ initialUI, onSave }) =
               </div>
 
               <div className="space-y-1">
-                <label className="text-white/70">Alignment:</label>
+                <label style={{ color: 'var(--menu-text-secondary)' }}>Alignment:</label>
                 <select
                   value={formData.clockAlignment || 'left'}
                   onChange={(e) => handleChange('clockAlignment', e.target.value as any)}
-                  className="w-full bg-[#101010] border border-white/15 rounded-xl px-3 py-1.5 text-white outline-none"
+                  className="w-full rounded-xl px-3 py-1.5 outline-none cursor-pointer"
+                  style={{
+                    backgroundColor: 'var(--menu-input-bg)',
+                    border: '1px solid var(--menu-input-border)',
+                    color: 'var(--menu-text-primary)'
+                  }}
                 >
                   <option value="left">Left</option>
                   <option value="center">Center</option>
@@ -241,18 +397,18 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({ initialUI, onSave }) =
             </div>
 
             <div className="flex items-center justify-between pt-1">
-              <label className="flex items-center gap-2 cursor-pointer select-none">
+              <label className="flex items-center gap-2 cursor-pointer select-none cursor-target">
                 <input
                   type="checkbox"
                   checked={!!formData.clock12Hour}
                   onChange={(e) => handleChange('clock12Hour', e.target.checked)}
-                  className="rounded border-white/20 bg-white/5 accent-[#C44900] w-4 h-4 cursor-pointer"
+                  className="rounded accent-[#C44900] w-4 h-4 cursor-pointer"
                 />
-                <span>12-Hour Format (AM/PM)</span>
+                <span style={{ color: 'var(--menu-text-primary)' }}>12-Hour Format (AM/PM)</span>
               </label>
 
-              <div className="flex items-center gap-2">
-                <span className="text-white/70">Color:</span>
+              <div className="flex items-center gap-2 cursor-target">
+                <span style={{ color: 'var(--menu-text-secondary)' }}>Color:</span>
                 <input
                   type="color"
                   value={formData.clockColor || '#ffffff'}
@@ -265,30 +421,43 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({ initialUI, onSave }) =
         </div>
 
         {/* Card 4: Layout & System Controls */}
-        <div className="card-surface rounded-2xl p-5 border border-white/10 space-y-4">
-          <div className="flex items-center gap-2 pb-2 border-b border-white/5">
+        <div
+          className="card-surface rounded-2xl p-5 space-y-4 cursor-target transition-colors duration-200"
+          style={{
+            backgroundColor: 'var(--menu-surface)',
+            border: '1px solid var(--menu-card-border)'
+          }}
+        >
+          <div className="flex items-center gap-2 pb-2 border-b" style={{ borderColor: 'var(--menu-divider)' }}>
             <Sliders size={16} className="text-[#E86711]" />
-            <h3 className="font-bold uppercase tracking-wider text-xs">Layout & System Sync</h3>
+            <h3 className="font-bold uppercase tracking-wider text-xs" style={{ color: 'var(--menu-text-primary)' }}>
+              Layout & System Sync
+            </h3>
           </div>
 
           <div className="space-y-3">
-            <label className="flex items-center gap-2.5 cursor-pointer select-none">
+            <label className="flex items-center gap-2.5 cursor-pointer select-none cursor-target">
               <input
                 type="checkbox"
                 checked={!!formData.autoStart}
                 onChange={(e) => handleChange('autoStart', e.target.checked)}
-                className="rounded border-white/20 bg-white/5 accent-[#C44900] w-4 h-4 cursor-pointer"
+                className="rounded accent-[#C44900] w-4 h-4 cursor-pointer"
               />
-              <span>Launch Widget on Windows Startup</span>
+              <span style={{ color: 'var(--menu-text-primary)' }}>Launch Widget on Windows Startup</span>
             </label>
 
             <div className="grid grid-cols-2 gap-3 pt-1">
               <div className="space-y-1">
-                <label className="text-white/70">Days to Display:</label>
+                <label style={{ color: 'var(--menu-text-secondary)' }}>Days to Display:</label>
                 <select
                   value={formData.displayDays || 7}
                   onChange={(e) => handleChange('displayDays', Number(e.target.value))}
-                  className="w-full bg-[#101010] border border-white/15 rounded-xl px-3 py-1.5 text-white outline-none"
+                  className="w-full rounded-xl px-3 py-1.5 outline-none cursor-pointer"
+                  style={{
+                    backgroundColor: 'var(--menu-input-bg)',
+                    border: '1px solid var(--menu-input-border)',
+                    color: 'var(--menu-text-primary)'
+                  }}
                 >
                   {Array.from({ length: 14 }, (_, i) => i + 1).map((n) => (
                     <option key={n} value={n}>
@@ -299,11 +468,16 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({ initialUI, onSave }) =
               </div>
 
               <div className="space-y-1">
-                <label className="text-white/70">Sync Interval:</label>
+                <label style={{ color: 'var(--menu-text-secondary)' }}>Sync Interval:</label>
                 <select
                   value={formData.fetchInterval || 1}
                   onChange={(e) => handleChange('fetchInterval', Number(e.target.value))}
-                  className="w-full bg-[#101010] border border-white/15 rounded-xl px-3 py-1.5 text-white outline-none"
+                  className="w-full rounded-xl px-3 py-1.5 outline-none cursor-pointer"
+                  style={{
+                    backgroundColor: 'var(--menu-input-bg)',
+                    border: '1px solid var(--menu-input-border)',
+                    color: 'var(--menu-text-primary)'
+                  }}
                 >
                   <option value="1">Every 1 min</option>
                   <option value="3">Every 3 mins</option>
@@ -317,8 +491,10 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({ initialUI, onSave }) =
 
             <div className="space-y-1 pt-1">
               <div className="flex justify-between">
-                <label className="text-white/70">Date Group Spacing:</label>
-                <span className="font-mono text-white/90">{formData.dateSpacing ?? 16}px</span>
+                <label style={{ color: 'var(--menu-text-secondary)' }}>Date Group Spacing:</label>
+                <span className="font-mono font-bold" style={{ color: 'var(--menu-text-primary)' }}>
+                  {formData.dateSpacing ?? 16}px
+                </span>
               </div>
               <input
                 type="range"
@@ -333,41 +509,49 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({ initialUI, onSave }) =
         </div>
 
         {/* Card 5: Task Management */}
-        <div className="card-surface rounded-2xl p-5 border border-white/10 space-y-4 md:col-span-2">
-          <div className="flex items-center gap-2 pb-2 border-b border-white/5">
+        <div
+          className="card-surface rounded-2xl p-5 space-y-4 md:col-span-2 cursor-target transition-colors duration-200"
+          style={{
+            backgroundColor: 'var(--menu-surface)',
+            border: '1px solid var(--menu-card-border)'
+          }}
+        >
+          <div className="flex items-center gap-2 pb-2 border-b" style={{ borderColor: 'var(--menu-divider)' }}>
             <CheckSquare size={16} className="text-[#E86711]" />
-            <h3 className="font-bold uppercase tracking-wider text-xs">Task Automation & Done Rules</h3>
+            <h3 className="font-bold uppercase tracking-wider text-xs" style={{ color: 'var(--menu-text-primary)' }}>
+              Task Automation & Done Rules
+            </h3>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <label className="flex items-center gap-2.5 cursor-pointer select-none">
+            <label className="flex items-center gap-2.5 cursor-pointer select-none cursor-target">
               <input
                 type="checkbox"
                 checked={formData.enableMarkDone !== false}
                 onChange={(e) => handleChange('enableMarkDone', e.target.checked)}
-                className="rounded border-white/20 bg-white/5 accent-[#C44900] w-4 h-4 cursor-pointer"
+                className="rounded accent-[#C44900] w-4 h-4 cursor-pointer"
               />
-              <span>Enable Mark as Done</span>
+              <span style={{ color: 'var(--menu-text-primary)' }}>Enable Mark as Done</span>
             </label>
 
-            <label className="flex items-center gap-2.5 cursor-pointer select-none">
+            <label className="flex items-center gap-2.5 cursor-pointer select-none cursor-target">
               <input
                 type="checkbox"
                 checked={formData.showCompletedEvents !== false}
                 onChange={(e) => handleChange('showCompletedEvents', e.target.checked)}
-                className="rounded border-white/20 bg-white/5 accent-[#C44900] w-4 h-4 cursor-pointer"
+                className="rounded accent-[#C44900] w-4 h-4 cursor-pointer"
               />
-              <span>Show Completed (Strikethrough)</span>
+              <span style={{ color: 'var(--menu-text-primary)' }}>Show Completed (Strikethrough)</span>
             </label>
 
-            <label className="flex items-center gap-2.5 cursor-pointer select-none">
+            <label className="flex items-center gap-2.5 cursor-pointer select-none cursor-target">
               <input
                 type="checkbox"
                 checked={formData.showEmptyDays !== false}
                 onChange={(e) => handleChange('showEmptyDays', e.target.checked)}
-                className="rounded border-white/20 bg-white/5 accent-[#C44900] w-4 h-4 cursor-pointer"
+                className="rounded accent-[#C44900] w-4 h-4 cursor-pointer"
               />
-              <span>Show Days Without Events</span>
+              <span style={{ color: 'var(--menu-text-primary)' }}>Show Days Without Events</span>
             </label>
           </div>
         </div>
