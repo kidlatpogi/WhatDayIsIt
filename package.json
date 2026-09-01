@@ -38,8 +38,8 @@
     "vite": "^6.2.0"
   },
   "build": {
-    "appId": "com.kidlatpogi.calendarwidget",
-    "productName": "Calendar Widget",
+    "appId": "com.kidlatpogi.whatdayisit",
+    "productName": "WhatDayIsIt",
     "asar": true,
     "directories": {
       "buildResources": "assets",
