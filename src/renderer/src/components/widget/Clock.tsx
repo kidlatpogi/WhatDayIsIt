@@ -43,7 +43,7 @@ export const Clock: React.FC<ClockProps> = ({ ui }) => {
 
   return (
     <div
-      className={`font-semibold pb-1 mb-1 border-b border-white/10 ${alignmentClass}`}
+      className={`clock-header font-semibold pb-1 mb-1 border-b border-white/10 ${alignmentClass}`}
       style={{
         color: ui.clockColor || 'var(--clock-color)',
         fontFamily: ui.clockFontFamily ? `"${ui.clockFontFamily}", sans-serif` : 'var(--clock-font-family)',

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { CalendarEvent, UIConfig } from '../../../../types';
 import { formatEventTime, getEventStatus } from '../../utils/date';
+import { hexToRgba } from '../../utils/colors';
 
 interface EventItemProps {
   event: CalendarEvent;
@@ -53,31 +54,42 @@ export const EventItem: React.FC<EventItemProps> = ({
     statusClasses = 'line-through opacity-60';
   } else if (status === 'ongoing') {
     statusClasses = 'pl-2 rounded-sm';
+    const ongoingColor = ui.highlightColor || '#a3ff33';
     statusStyle = {
-      borderLeft: '4px solid var(--ongoing-color)',
-      backgroundColor: 'var(--ongoing-rgba)'
+      borderLeft: `4px solid ${ongoingColor}`,
+      backgroundColor: hexToRgba(ongoingColor, 0.15)
     };
   } else if (status === 'future') {
     statusClasses = 'pl-2 rounded-sm';
+    const upcomingColor = ui.upcomingColor || ui.highlightColor || '#a3ff33';
     statusStyle = {
-      borderLeft: '4px solid var(--upcoming-color)',
-      backgroundColor: 'var(--upcoming-rgba)'
+      borderLeft: `4px solid ${upcomingColor}`,
+      backgroundColor: hexToRgba(upcomingColor, 0.15)
     };
   }
+
+  const baseFontSize = ui.fontSize ? `${ui.fontSize}px` : 'var(--app-font-size)';
+  const smallFontSize = ui.fontSize ? `${Math.max(10, Number(ui.fontSize) - 2)}px` : 'var(--app-font-small)';
 
   return (
     <>
       <div
-        className={`my-1 py-0.5 text-[length:var(--app-font-size)] cursor-default select-none transition-colors ${statusClasses}`}
-        style={statusStyle}
+        className={`event-item my-1 py-0.5 cursor-default select-none transition-colors ${statusClasses}`}
+        style={{
+          ...statusStyle,
+          fontSize: baseFontSize
+        }}
         onContextMenu={handleContextMenu}
         onDoubleClick={handleDoubleClick}
       >
         {timeText && (
           <>
             <span
-              className="text-[length:var(--app-font-small)] mr-1.5 font-normal"
-              style={{ color: 'var(--date-time-color)' }}
+              className="event-time mr-1.5 font-normal"
+              style={{
+                fontSize: smallFontSize,
+                color: ui.dateTimeColor || 'var(--date-time-color)'
+              }}
             >
               {timeText}
             </span>
@@ -85,8 +97,8 @@ export const EventItem: React.FC<EventItemProps> = ({
           </>
         )}
         <span
-          className="font-medium"
-          style={{ color: 'var(--schedule-color)' }}
+          className="event-summary font-medium"
+          style={{ color: ui.scheduleColor || 'var(--schedule-color)' }}
         >
           {event.summary || 'No title'}
         </span>
@@ -99,6 +111,7 @@ export const EventItem: React.FC<EventItemProps> = ({
           onClick={() => setContextMenu(null)}
         >
           <button
+            type="button"
             className="w-full text-left px-3 py-1.5 text-xs text-white hover:bg-white/10 transition-colors"
             onClick={() => {
               onToggleComplete(eventId);

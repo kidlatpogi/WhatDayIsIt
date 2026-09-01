@@ -3,6 +3,7 @@ import { CalendarEvent, UIConfig } from '../../../../types';
 import { Clock } from './Clock';
 import { EventItem } from './EventItem';
 import { formatLocalDateKey } from '../../utils/date';
+import { hexToRgba } from '../../utils/colors';
 
 interface DayGroupProps {
   date: Date;
@@ -29,27 +30,43 @@ export const DayGroup: React.FC<DayGroupProps> = ({
     day: 'numeric'
   });
 
+  const headerFontSize = ui.fontSize ? Math.max(12, Number(ui.fontSize) + 2) : undefined;
+
   return (
     <div
-      className="day-group select-none"
-      style={{ marginBottom: ui.dateSpacing !== undefined ? `${ui.dateSpacing}px` : 'var(--date-spacing)' }}
+      className={`day-group select-none ${isToday ? 'is-today' : ''}`}
+      style={{
+        marginBottom: ui.dateSpacing !== undefined ? `${ui.dateSpacing}px` : 'var(--date-spacing)'
+      }}
     >
       {isToday && <Clock ui={ui} />}
 
       <div
-        className={`day-header flex items-baseline font-bold mb-1 text-[length:var(--app-font-large)] rounded px-1 ${
-          isToday ? 'bg-[var(--highlight-rgba)] py-0.5' : ''
+        className={`day-header flex items-baseline font-bold mb-1 rounded px-1 ${
+          isToday ? 'py-0.5' : ''
         }`}
+        style={{
+          backgroundColor: isToday
+            ? ui.highlightColor
+              ? hexToRgba(ui.highlightColor, 0.15)
+              : 'var(--highlight-rgba)'
+            : undefined,
+          fontSize: headerFontSize ? `${headerFontSize}px` : 'var(--app-font-large)'
+        }}
       >
         <span
           className="day-name"
-          style={{ color: isToday ? 'var(--highlight-color)' : 'var(--day-color)' }}
+          style={{
+            color: isToday
+              ? ui.highlightColor || 'var(--highlight-color)'
+              : ui.dayColor || 'var(--day-color)'
+          }}
         >
           {weekday}
         </span>
         <span
-          className="date ml-2 font-normal text-[0.85em]"
-          style={{ color: 'var(--date-color)' }}
+          className="date date-subtext ml-2 font-normal text-[0.85em]"
+          style={{ color: ui.dateColor || 'var(--date-color)' }}
         >
           {formattedDate}
         </span>

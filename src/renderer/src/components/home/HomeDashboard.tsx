@@ -120,7 +120,7 @@ export const HomeDashboard: React.FC = () => {
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-sm font-extrabold tracking-tight" style={{ color: 'var(--menu-text-primary)' }}>
-              Calendar Widget
+              WhatDayIsIt
             </h1>
             <span className="badge-mono text-[9px] px-1.5 py-0.5 rounded font-bold text-[#E86711] bg-[#C44900]/15">
               v1.1.0

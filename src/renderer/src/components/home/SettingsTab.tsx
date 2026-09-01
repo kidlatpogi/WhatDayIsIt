@@ -97,7 +97,7 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({ initialUI, onSave }) =
 
           <div className="space-y-3">
             <div className="space-y-1">
-              <label style={{ color: 'var(--menu-text-secondary)' }}>Font Family:</label>
+              <label style={{ color: 'var(--menu-text-secondary)' }}>Calendar Font Family:</label>
               <select
                 value={formData.fontFamily || 'Segoe UI'}
                 onChange={(e) => handleChange('fontFamily', e.target.value)}
@@ -118,7 +118,7 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({ initialUI, onSave }) =
 
             <div className="space-y-1">
               <div className="flex justify-between">
-                <label style={{ color: 'var(--menu-text-secondary)' }}>Font Size:</label>
+                <label style={{ color: 'var(--menu-text-secondary)' }}>Calendar Font Size:</label>
                 <span className="font-mono font-bold" style={{ color: 'var(--menu-text-primary)' }}>
                   {formData.fontSize ?? 14}px
                 </span>
@@ -126,7 +126,7 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({ initialUI, onSave }) =
               <input
                 type="range"
                 min="10"
-                max="22"
+                max="24"
                 value={formData.fontSize ?? 14}
                 onChange={(e) => handleChange('fontSize', Number(e.target.value))}
                 className="w-full accent-[#C44900] cursor-pointer"
@@ -315,6 +315,24 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({ initialUI, onSave }) =
               </div>
             </div>
 
+            {/* Separate Clock Font Size Slider */}
+            <div className="space-y-1 pt-1">
+              <div className="flex justify-between">
+                <label style={{ color: 'var(--menu-text-secondary)' }}>Clock Font Size:</label>
+                <span className="font-mono font-bold" style={{ color: 'var(--menu-text-primary)' }}>
+                  {formData.clockSize ?? 18}px
+                </span>
+              </div>
+              <input
+                type="range"
+                min="12"
+                max="36"
+                value={formData.clockSize ?? 18}
+                onChange={(e) => handleChange('clockSize', Number(e.target.value))}
+                className="w-full accent-[#C44900] cursor-pointer"
+              />
+            </div>
+
             <div className="flex items-center justify-between pt-1">
               <label className="flex items-center gap-2 cursor-pointer select-none cursor-target">
                 <input
@@ -327,7 +345,7 @@ export const SettingsTab: React.FC<SettingsTabProps> = ({ initialUI, onSave }) =
               </label>
 
               <div className="flex items-center gap-2 cursor-target">
-                <span style={{ color: 'var(--menu-text-secondary)' }}>Color:</span>
+                <span style={{ color: 'var(--menu-text-secondary)' }}>Clock Color:</span>
                 <input
                   type="color"
                   value={formData.clockColor || '#ffffff'}

@@ -207,6 +207,10 @@ export const WidgetView: React.FC = () => {
     <div
       ref={containerRef}
       id="app"
+      style={{
+        fontFamily: ui.fontFamily ? `"${ui.fontFamily}", sans-serif` : 'var(--app-font-family)',
+        fontSize: ui.fontSize ? `${ui.fontSize}px` : 'var(--app-font-size)'
+      }}
       className={`min-w-[340px] max-w-[480px] p-3 text-white select-none flex flex-col bg-transparent cursor-grab active:cursor-grabbing ${
         ui.collapsed ? 'collapsed' : ''
       }`}

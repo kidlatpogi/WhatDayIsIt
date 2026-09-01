@@ -1,10 +1,10 @@
 <div align="center">
 
-# 📅 Calendar Widget
+# WhatDayIsIt
 
 **A lightweight, transparent desktop calendar overlay for Windows synchronized directly with Google Calendar.**
 
-[![Release](https://img.shields.io/github/v/release/kidlatpogi/Calendar-Widget?style=for-the-badge&color=C44900)](https://github.com/kidlatpogi/Calendar-Widget/releases/latest)
+[![Download Latest Release](https://img.shields.io/github/v/release/kidlatpogi/Calendar-Widget?label=Download%20Latest&color=brightgreen&style=for-the-badge&logo=github)](https://github.com/kidlatpogi/Calendar-Widget/releases/latest)
 [![Platform](https://img.shields.io/badge/Platform-Windows%2010%20%7C%2011-0078D6?style=for-the-badge&logo=windows)](https://github.com/kidlatpogi/Calendar-Widget/releases/latest)
 [![Electron](https://img.shields.io/badge/Electron-34.x-47848F?style=for-the-badge&logo=electron)](https://www.electronjs.org/)
 [![React](https://img.shields.io/badge/React-18.x-61DAFB?style=for-the-badge&logo=react)](https://react.dev/)
@@ -13,29 +13,50 @@
 
 <br/>
 
-[⬇️ **Download Latest Windows Release (.exe)**](https://github.com/kidlatpogi/Calendar-Widget/releases/latest) • [📖 **Integration Guide**](#-google-calendar-setup) • [⌨️ **Hotkeys**](#-keyboard-shortcuts) • [🛠️ **Development**](#-development--build)
+[**Download Installer (.exe)**](https://github.com/kidlatpogi/Calendar-Widget/releases/latest) • [**Why I Built This**](#-why-i-built-this) • [**Keybinds**](#%EF%B8%8F-keybinds) • [**Setup Guide**](#google-calendar-setup) • [**Development**](#development--build)
 
 </div>
 
 ---
 
-## ⚡ Technical Overview
+## 💡 Why I Built This
 
-**Calendar Widget** is an ambient, always-visible desktop overlay engineered to keep your upcoming schedule in sight without context switching. Designed with a **local-first privacy architecture**, all feed synchronization, RRULE recurrence expansion, and preferences are computed directly on your PC with a **sub-50MB RAM footprint**.
-
-### 🌟 Key Features
-
-- 🔒 **100% Local-First Privacy**: Connects directly to Google Calendar via HTTPS. Zero cloud relays, zero tracking telemetry, and zero behavioral analytics.
-- 🪟 **Hardware-Accelerated DirectComposition**: Native per-pixel alpha transparency on Windows DWM that launches instantly transparent on startup.
-- ⏱️ **RFC 5545 Recurrence Engine**: Comprehensive support for `VEVENT`, complex `RRULE` (daily, weekly, monthly, yearly), `EXDATE` exception rules, and multi-timezone offsets.
-- 🎨 **Real-Time Live Customization**: Modify typography, theme swatches, font size, clock format, and day group spacing with immediate live reactivity on your desktop widget.
-- 🖱️ **Fluid Drag & Click-Through**: Move freely across monitors using custom pointer capture, or activate click-through mode (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>C</kbd>) to pass mouse clicks to background windows.
-- 🌓 **Dark & Light Mode Dashboard**: High-contrast theme engine featuring GSAP magnetic HUD bracket targeting cursor.
-- 📥 **System Tray Operations**: Native Windows taskbar tray icon for background syncing, one-click window toggles, and instant preferences access.
+I often found myself **opening Google Calendar or checking my phone** just to see my next schedule.  
+I wanted something that’s **always visible**, **minimal**, and **instantly accessible** — right on my desktop.  
+That’s how this widget was born.
 
 ---
 
-## 🖼️ Visual Showcase
+## Technical Overview
+
+**WhatDayIsIt** is an ambient, always-visible desktop overlay engineered to keep your upcoming schedule in sight without context switching. Designed with a **local-first privacy architecture**, all feed synchronization, RRULE recurrence expansion, and preferences are computed directly on your PC with a **sub-50MB RAM footprint**.
+
+### Key Features
+
+- **100% Local-First Privacy**: Connects directly to Google Calendar via HTTPS. Zero cloud relays, zero tracking telemetry, and zero behavioral analytics.
+- **Hardware-Accelerated DirectComposition**: Native per-pixel alpha transparency on Windows DWM that launches instantly transparent on startup.
+- **RFC 5545 Recurrence Engine**: Comprehensive support for `VEVENT`, complex `RRULE` (daily, weekly, monthly, yearly), `EXDATE` exception rules, and multi-timezone offsets.
+- **Real-Time Live Customization**: Modify typography, theme swatches, font size, clock format, and day group spacing with immediate live reactivity on your desktop widget.
+- **Fluid Drag & Click-Through**: Move freely across monitors using custom pointer capture, or activate click-through mode (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>C</kbd>) to pass mouse clicks to background windows.
+- **Dark & Light Mode Dashboard**: High-contrast theme engine featuring GSAP magnetic HUD bracket targeting cursor.
+- **System Tray Operations**: Native Windows taskbar tray icon for background syncing, one-click window toggles, and instant preferences access.
+
+---
+
+## ⌨️ Keybinds
+
+<div align="center">
+
+| Shortcut | Action |
+|:----------:|:----------------------------|
+| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>M</kbd> | Hide Buttons |
+| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>C</kbd> | Toggle Click-Through Mode |
+
+</div>
+
+---
+
+## Visual Showcase
 
 <!-- Visual showcase placeholders: Update with new screenshots and animated GIFs -->
 
@@ -60,26 +81,16 @@
 
 ---
 
-## ⌨️ Keyboard Shortcuts
-
-| Shortcut | Action | Description |
-| :---: | :--- | :--- |
-| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>M</kbd> | **Toggle Collapse** | Hides Home & Refresh buttons for a minimal, distraction-free floating timeline |
-| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>C</kbd> | **Toggle Click-Through** | Passes mouse click events directly through the widget to underlying desktop windows |
-| **Right-Click / Double-Click** | **Mark Completed** | Toggles strikethrough completion state on calendar tasks with local persistence |
-
----
-
-## 📖 Google Calendar Setup
+## Google Calendar Setup
 
 1. **Open Google Calendar**: Navigate to [Google Calendar Settings](https://calendar.google.com/calendar/r/settings).
 2. **Select Calendar**: In the left sidebar under *"Settings for my calendars"*, click your desired calendar.
 3. **Copy Secret Address**: Scroll down to the *"Integrate calendar"* section and copy the **"Secret address in iCal format"** (`.ics` URL).
-4. **Add to Widget**: Open Calendar Widget, go to the **Calendars** tab, paste the link, and click **Add Feed**.
+4. **Add to Widget**: Open WhatDayIsIt, go to the **Calendars** tab, paste the link, and click **Add Feed**.
 
 ---
 
-## 🛠️ Development & Build
+## Development & Build
 
 ### Prerequisites
 - [Node.js](https://nodejs.org/) (v18.0.0 or higher)
@@ -115,7 +126,7 @@ Packaged installers and unpacked binaries are generated in the `dist/` directory
 
 ---
 
-## 🏗️ Project Architecture
+## Project Architecture
 
 ```
 Schedule-Widget-Electron/
@@ -155,7 +166,7 @@ Schedule-Widget-Electron/
 
 ---
 
-## 📄 License
+## License
 
 This project is licensed under the custom **MIT License with Attribution Requirement**.
 
@@ -189,6 +200,6 @@ THE SOFTWARE.
 
 <div align="center">
 
-Crafted with ❤️ by [**Zeus Angelo Bautista**](https://www.zeusbautista.site/)
+Crafted by [**Zeus Angelo Bautista**](https://www.zeusbautista.site/)
 
 </div>

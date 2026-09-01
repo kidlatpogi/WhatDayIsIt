@@ -31,15 +31,15 @@
   --app-font-family: "Segoe UI", Arial, sans-serif;
   --app-font-size: 14px;
   --app-font-small: 11px;
-  --app-font-large: 15px;
+  --app-font-large: 16px;
   --schedule-color: #ffffff;
   --date-time-color: #cfe9ff;
   --highlight-color: #a3ff33;
-  --highlight-rgba: rgba(163, 255, 51, 0.12);
+  --highlight-rgba: rgba(163, 255, 51, 0.15);
   --ongoing-color: #a3ff33;
-  --ongoing-rgba: rgba(163, 255, 51, 0.12);
+  --ongoing-rgba: rgba(163, 255, 51, 0.15);
   --upcoming-color: #a3ff33;
-  --upcoming-rgba: rgba(163, 255, 51, 0.12);
+  --upcoming-rgba: rgba(163, 255, 51, 0.15);
   --day-color: #ffffff;
   --date-color: #cfe9ff;
   --date-spacing: 16px;
@@ -88,6 +88,50 @@ html, body, #root {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Dynamic Calendar Widget Styles */
+#app {
+  font-family: var(--app-font-family) !important;
+}
+
+#app .day-header {
+  font-size: var(--app-font-large) !important;
+}
+
+#app .event-item {
+  font-size: var(--app-font-size) !important;
+}
+
+#app .event-time {
+  font-size: var(--app-font-small) !important;
+  color: var(--date-time-color) !important;
+}
+
+#app .event-summary {
+  color: var(--schedule-color) !important;
+}
+
+#app .day-name {
+  color: var(--day-color) !important;
+}
+
+#app .day-group.is-today .day-name {
+  color: var(--highlight-color) !important;
+}
+
+#app .day-group.is-today .day-header {
+  background-color: var(--highlight-rgba) !important;
+}
+
+#app .date-subtext {
+  color: var(--date-color) !important;
+}
+
+#app .clock-header {
+  color: var(--clock-color) !important;
+  font-family: var(--clock-font-family) !important;
+  font-size: var(--clock-size) !important;
 }
 
 /* Custom Scrollbars */

@@ -26,14 +26,14 @@ export function applyCssVariables(ui: Record<string, any>): void {
   const root = document.documentElement;
 
   if (ui.fontFamily) {
-    root.style.setProperty('--app-font-family', ui.fontFamily);
+    root.style.setProperty('--app-font-family', `"${ui.fontFamily}", sans-serif`);
   }
 
   if (ui.fontSize) {
     const fs = Number(ui.fontSize) || 14;
     root.style.setProperty('--app-font-size', `${fs}px`);
     root.style.setProperty('--app-font-small', `${Math.max(10, fs - 2)}px`);
-    root.style.setProperty('--app-font-large', `${Math.max(12, fs + 1)}px`);
+    root.style.setProperty('--app-font-large', `${Math.max(12, fs + 2)}px`);
   }
 
   if (ui.scheduleColor) root.style.setProperty('--schedule-color', ui.scheduleColor);
@@ -41,17 +41,17 @@ export function applyCssVariables(ui: Record<string, any>): void {
 
   if (ui.highlightColor) {
     root.style.setProperty('--highlight-color', ui.highlightColor);
-    root.style.setProperty('--highlight-rgba', hexToRgba(ui.highlightColor, 0.12));
+    root.style.setProperty('--highlight-rgba', hexToRgba(ui.highlightColor, 0.15));
     root.style.setProperty('--ongoing-color', ui.highlightColor);
-    root.style.setProperty('--ongoing-rgba', hexToRgba(ui.highlightColor, 0.12));
+    root.style.setProperty('--ongoing-rgba', hexToRgba(ui.highlightColor, 0.15));
   }
 
   if (ui.upcomingColor) {
     root.style.setProperty('--upcoming-color', ui.upcomingColor);
-    root.style.setProperty('--upcoming-rgba', hexToRgba(ui.upcomingColor, 0.12));
+    root.style.setProperty('--upcoming-rgba', hexToRgba(ui.upcomingColor, 0.15));
   } else if (ui.highlightColor) {
     root.style.setProperty('--upcoming-color', ui.highlightColor);
-    root.style.setProperty('--upcoming-rgba', hexToRgba(ui.highlightColor, 0.12));
+    root.style.setProperty('--upcoming-rgba', hexToRgba(ui.highlightColor, 0.15));
   }
 
   if (ui.dayColor) root.style.setProperty('--day-color', ui.dayColor);
@@ -59,7 +59,7 @@ export function applyCssVariables(ui: Record<string, any>): void {
   if (ui.dateSpacing !== undefined) root.style.setProperty('--date-spacing', `${ui.dateSpacing}px`);
 
   if (ui.clockColor) root.style.setProperty('--clock-color', ui.clockColor);
-  if (ui.clockFontFamily) root.style.setProperty('--clock-font-family', ui.clockFontFamily);
+  if (ui.clockFontFamily) root.style.setProperty('--clock-font-family', `"${ui.clockFontFamily}", sans-serif`);
   if (ui.clockSize !== undefined) root.style.setProperty('--clock-size', `${ui.clockSize}px`);
   if (ui.clockAlignment) root.style.setProperty('--clock-alignment', ui.clockAlignment);
 }
