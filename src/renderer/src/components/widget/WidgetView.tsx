@@ -5,12 +5,14 @@ import { DayGroup } from './DayGroup';
 import { Controls } from './Controls';
 import { formatLocalDateKey, parseEventDateObj } from '../../utils/date';
 import { CalendarEvent } from '../../../../types';
+import { GripHorizontal } from 'lucide-react';
 
 export const WidgetView: React.FC = () => {
   const { config, ui, saveConfig } = useConfig();
   const { events, loading, error, refreshEvents } = useEvents();
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const dragHandleRef = useRef<HTMLDivElement>(null);
 
   // Keyboard shortcut listener
   useEffect(() => {
@@ -70,24 +72,26 @@ export const WidgetView: React.FC = () => {
     };
   });
 
-  // Custom window drag handler
+  // Bulletproof custom window drag handler
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
 
     let isDragging = false;
-    let startX = 0;
-    let startY = 0;
+    let startScreenX = 0;
+    let startScreenY = 0;
 
     const handlePointerDown = (e: PointerEvent) => {
-      // Only drag on primary click and not on interactive buttons
+      // Only primary left button
       if (e.button !== 0) return;
       const target = e.target as HTMLElement;
-      if (target.closest('button, input, select, a, .no-drag-region')) return;
+      // Do not drag if clicking directly on a button or interactive child
+      if (target.closest('button, input, select, a, [role="button"]')) return;
 
       isDragging = true;
-      startX = e.screenX;
-      startY = e.screenY;
+      startScreenX = e.screenX;
+      startScreenY = e.screenY;
+
       try {
         container.setPointerCapture(e.pointerId);
       } catch {
@@ -97,12 +101,12 @@ export const WidgetView: React.FC = () => {
 
     const handlePointerMove = (e: PointerEvent) => {
       if (!isDragging) return;
-      const dx = e.screenX - startX;
-      const dy = e.screenY - startY;
+      const dx = e.screenX - startScreenX;
+      const dy = e.screenY - startScreenY;
       if (dx === 0 && dy === 0) return;
 
-      startX = e.screenX;
-      startY = e.screenY;
+      startScreenX = e.screenX;
+      startScreenY = e.screenY;
       window.electronAPI?.moveWindowBy(dx, dy);
     };
 
@@ -203,17 +207,26 @@ export const WidgetView: React.FC = () => {
     <div
       ref={containerRef}
       id="app"
-      className={`min-w-[340px] max-w-[500px] p-3 text-white select-none flex flex-col cursor-default drag-region ${
+      className={`min-w-[340px] max-w-[480px] p-3 text-white select-none flex flex-col bg-transparent cursor-grab active:cursor-grabbing ${
         ui.collapsed ? 'collapsed' : ''
       }`}
     >
+      {/* Top Drag Grip Handle */}
+      <div
+        ref={dragHandleRef}
+        title="Drag widget anywhere"
+        className="w-full flex items-center justify-center py-1 opacity-25 hover:opacity-80 transition-opacity mb-1 cursor-grab"
+      >
+        <GripHorizontal size={16} className="text-white" />
+      </div>
+
       <div id="drag-handle" className="flex flex-col">
         {loading && events.length === 0 ? (
-          <div className="text-sm text-white/60 py-2">Loading events...</div>
+          <div className="text-xs text-white/60 py-2">Loading events...</div>
         ) : error && events.length === 0 ? (
-          <div className="text-sm text-red-400 py-2">Error: {error}</div>
+          <div className="text-xs text-red-400 py-2">Error: {error}</div>
         ) : groupedDays.length === 0 ? (
-          <div className="text-sm text-white/60 italic py-2">No events scheduled</div>
+          <div className="text-xs text-white/50 italic py-2">No events scheduled</div>
         ) : (
           <div id="list" className="flex flex-col">
             {groupedDays.map((day) => (
@@ -240,7 +253,7 @@ export const WidgetView: React.FC = () => {
       </div>
 
       {toastMessage && (
-        <div className="fixed bottom-4 left-3 z-50 px-3 py-1.5 bg-black/85 text-white text-xs rounded-lg shadow-lg border border-white/10 animate-fade-in">
+        <div className="fixed bottom-4 left-3 z-50 px-3 py-1.5 bg-[#141313]/90 text-white text-xs rounded-lg shadow-xl border border-white/10">
           {toastMessage}
         </div>
       )}

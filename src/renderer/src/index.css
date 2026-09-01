@@ -19,6 +19,20 @@
 }
 
 :root {
+  /* Brand Tokens from designs.md */
+  --color-accent: #C44900;
+  --color-accent-hover: #E86711;
+  --color-accent-active: #D65408;
+  --color-surface: #141313;
+  --color-surface-dim: #101010;
+  --color-surface-container: #201f1f;
+  --color-surface-container-low: #1c1b1b;
+  --color-surface-container-high: #2a2a2a;
+  
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'Roboto Mono', monospace;
+
+  /* Dynamic Widget Variables */
   --app-font-family: "Segoe UI", Arial, sans-serif;
   --app-font-size: 14px;
   --app-font-small: 11px;
@@ -40,31 +54,18 @@
   --clock-alignment: left;
 }
 
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  background: transparent;
-  font-family: var(--app-font-family);
-  font-size: var(--app-font-size);
+html, body, #root {
+  background: transparent !important;
+  font-family: var(--font-sans);
   color: rgba(255, 255, 255, 0.95);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Draggable regions for frameless transparent windows */
-.drag-region {
-  -webkit-app-region: drag;
-}
-
-.no-drag-region {
-  -webkit-app-region: no-drag;
-}
-
-/* Custom modern scrollbars */
+/* Custom Scrollbars */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-track {
@@ -72,7 +73,7 @@ html, body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.12);
   border-radius: 4px;
 }
 
@@ -80,54 +81,49 @@ html, body {
   background: rgba(255, 255, 255, 0.25);
 }
 
-/* Glassmorphic card styling */
-.glass-panel {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(16px) saturate(140%);
-  -webkit-backdrop-filter: blur(16px) saturate(140%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-}
-
-.glass-card {
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(12px) saturate(140%);
-  -webkit-backdrop-filter: blur(12px) saturate(140%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
-}
-
-/* Button glow and transitions */
-.btn-glass {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  transition: all 0.15s ease;
-}
-
-.btn-glass:hover {
-  transform: translateY(-1px);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.04));
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
-}
-
-.btn-primary {
-  background: linear-gradient(180deg, #8c9eff, #5f72e4);
-  border: 1px solid #5f72e4;
+/* Button & Card utilities conforming to designs.md */
+.btn-accent {
+  background: linear-gradient(135deg, #C44900 0%, #E86711 100%);
   color: #ffffff;
   font-weight: 600;
-  box-shadow: 0 4px 16px rgba(95, 114, 228, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  transition: all 0.15s ease;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 14px rgba(196, 73, 0, 0.35);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.btn-primary:hover {
+.btn-accent:hover {
+  background: linear-gradient(135deg, #D65408 0%, #F57C20 100%);
+  box-shadow: 0 6px 20px rgba(196, 73, 0, 0.5);
   transform: translateY(-1px);
-  box-shadow: 0 6px 24px rgba(95, 114, 228, 0.5);
 }
 
-.btn-primary:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
+.btn-accent:active {
+  transform: translateY(0);
+}
+
+.btn-surface {
+  background: #201f1f;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.2s ease;
+}
+
+.btn-surface:hover {
+  background: #2a2a2a;
+  border-color: rgba(255, 255, 255, 0.18);
+  transform: translateY(-1px);
+}
+
+.card-surface {
+  background: #1c1b1b;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.badge-mono {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 10px;
+  font-weight: 600;
 }

@@ -45,6 +45,8 @@ export class WindowManager {
       width: 400,
       height: screenHeight,
       transparent: true,
+      backgroundColor: '#00000000',
+      hasShadow: false,
       frame: false,
       alwaysOnTop: cfg.ui?.alwaysOnTop ?? false,
       skipTaskbar: true,
@@ -128,8 +130,8 @@ export class WindowManager {
 
     const primaryDisplay = screen.getPrimaryDisplay();
     const { width: screenWidth, height: screenHeight } = primaryDisplay.workAreaSize;
-    const windowWidth = Math.min(1200, Math.floor(screenWidth * 0.9));
-    const windowHeight = Math.min(720, Math.floor(screenHeight * 0.85));
+    const windowWidth = Math.min(1240, Math.floor(screenWidth * 0.9));
+    const windowHeight = Math.min(800, Math.floor(screenHeight * 0.88));
 
     const iconPath = path.join(__dirname, '..', '..', 'assets', 'calendar.ico');
     const preloadPath = path.join(__dirname, '..', 'preload', 'index.js');
@@ -137,9 +139,10 @@ export class WindowManager {
     this.homeWin = new BrowserWindow({
       width: windowWidth,
       height: windowHeight,
-      minWidth: 400,
-      minHeight: 500,
+      minWidth: 800,
+      minHeight: 600,
       transparent: false,
+      backgroundColor: '#141313',
       frame: true,
       alwaysOnTop: false,
       skipTaskbar: false,

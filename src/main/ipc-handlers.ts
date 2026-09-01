@@ -146,17 +146,12 @@ export function setupIpcHandlers(
     }
   });
 
-  ipcMain.handle('move-window-by', (_ev, dx: number, dy: number) => {
+  ipcMain.handle('move-window-by', (ev, dx: number, dy: number) => {
     try {
-      const w = windowManager.win || windowManager.homeWin;
+      const w = BrowserWindow.fromWebContents(ev.sender) || windowManager.win;
       if (!w || w.isDestroyed()) return false;
-      const bounds = w.getBounds();
-      w.setBounds({
-        x: bounds.x + Math.round(dx),
-        y: bounds.y + Math.round(dy),
-        width: bounds.width,
-        height: bounds.height
-      });
+      const [x, y] = w.getPosition();
+      w.setPosition(Math.round(x + dx), Math.round(y + dy));
       return true;
     } catch {
       return false;
