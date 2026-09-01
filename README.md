@@ -13,7 +13,13 @@
 
 <br/>
 
-[**Download Installer (.exe)**](https://github.com/kidlatpogi/WhatDayIsIt/releases/latest) • [**Why I Built This**](#-why-i-built-this) • [**Keybinds**](#%EF%B8%8F-keybinds) • [**Setup Guide**](#google-calendar-setup) • [**Development**](#development--build)
+[**Download Installer (.exe)**](https://github.com/kidlatpogi/WhatDayIsIt/releases/latest) • [**Why I Built This**](#-why-i-built-this) • [**Keybinds**](#%EF%B8%8F-keybinds) • [**Visual Showcase**](#visual-showcase) • [**Setup Guide**](#google-calendar-setup) • [**Development**](#development--build)
+
+<br/>
+
+<p align="center">
+  <img src="assets/Calendar-Desktop-Example.png" alt="WhatDayIsIt Desktop Overview" width="920"/>
+</p>
 
 </div>
 
@@ -36,7 +42,7 @@ That’s how this widget was born.
 - **100% Local-First Privacy**: Connects directly to Google Calendar via HTTPS. Zero cloud relays, zero tracking telemetry, and zero behavioral analytics.
 - **Hardware-Accelerated DirectComposition**: Native per-pixel alpha transparency on Windows DWM that launches instantly transparent on startup.
 - **RFC 5545 Recurrence Engine**: Comprehensive support for `VEVENT`, complex `RRULE` (daily, weekly, monthly, yearly), `EXDATE` exception rules, and multi-timezone offsets.
-- **Real-Time Live Customization**: Modify typography, theme swatches, font size, clock format, and day group spacing with immediate live reactivity on your desktop widget.
+- **Real-Time Live Customization**: Modify typography, theme swatches, font sizes, clock formats, and day group spacing with immediate live reactivity on your desktop widget.
 - **Fluid Drag & Click-Through**: Move freely across monitors using custom pointer capture, or activate click-through mode (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>C</kbd>) to pass mouse clicks to background windows.
 - **Dark & Light Mode Dashboard**: High-contrast theme engine featuring GSAP magnetic HUD bracket targeting cursor.
 - **System Tray Operations**: Native Windows taskbar tray icon for background syncing, one-click window toggles, and instant preferences access.
@@ -58,26 +64,51 @@ That’s how this widget was born.
 
 ## Visual Showcase
 
-<!-- Visual showcase placeholders: Update with new screenshots and animated GIFs -->
+### Desktop Timeline & Management Dashboard
+*Ambient transparent floating widget alongside the centralized control console.*
 
-### Desktop Timeline Overlay
-*Ambient, transparent floating widget with real-time digital clock, color-coded event states, and smooth drag repositioning.*
-
-<!-- [PLACEHOLDER: Desktop Widget Screenshot] -->
+<p align="center">
+  <img src="assets/Calendar-and-Menu-Example.png" alt="Desktop Timeline and Dashboard" width="880"/>
+</p>
 
 ---
 
-### Management Dashboard
-*Centralized control console featuring live customization, iCal feed provisioning, interactive ATS tutorial guide, and security disclosures in both Dark and Light modes.*
+### Landing & Overview Console
+*Overview landing hub displaying connected feeds, active theme metrics, local privacy guarantee, and shortcut cheatsheet.*
 
-<!-- [PLACEHOLDER: Management Dashboard Screenshot] -->
+<p align="center">
+  <img src="assets/Overview.png" alt="Overview Console" width="880"/>
+</p>
+
+---
+
+### Customization Engine
+*Real-time typography controls, font size sliders, clock customization, and live color pickers.*
+
+<p align="center">
+  <img src="assets/Customization.png" alt="Customization Engine" width="880"/>
+</p>
 
 ---
 
 ### Interactive Demonstrations
-*Real-time desktop reactivity, multi-monitor window dragging, and click-through mode.*
 
-<!-- [PLACEHOLDER: Live Interaction Demo GIF] -->
+<div align="center">
+
+#### Window Dragging Across Multi-Monitors
+<img src="assets/Dragging.gif" alt="Window Dragging Demo" width="840"/>
+
+<br/><br/>
+
+#### Real-Time Customization Live Sync
+<img src="assets/Customizing.gif" alt="Real-Time Customization Demo" width="840"/>
+
+<br/><br/>
+
+#### Layout & Display Days Adjustment
+<img src="assets/Layout.gif" alt="Layout Demo" width="840"/>
+
+</div>
 
 ---
 
@@ -130,9 +161,16 @@ Packaged installers and unpacked binaries are generated in the `dist/` directory
 
 ```
 Schedule-Widget-Electron/
-├── assets/                          # Application icons, TTF typography, and NSIS scripts
+├── assets/                          # Application icons, showcase media, fonts, and NSIS scripts
 │   ├── Fonts/                       # Home Video & LED Dot-Matrix font assets
 │   ├── calendar.ico                 # Application window & tray icon
+│   ├── Calendar-Desktop-Example.png # Desktop showcase screenshot
+│   ├── Calendar-and-Menu-Example.png# Dashboard & widget screenshot
+│   ├── Overview.png                 # Overview console screenshot
+│   ├── Customization.png            # Customizer screenshot
+│   ├── Dragging.gif                 # Dragging demo animation
+│   ├── Customizing.gif              # Customization demo animation
+│   ├── Layout.gif                   # Layout sync demo animation
 │   └── uninstaller.nsh              # Custom NSIS registry and cleanup script
 ├── src/
 │   ├── main/                        # Electron Main Process (Node.js runtime)

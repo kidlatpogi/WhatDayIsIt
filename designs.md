@@ -47,7 +47,7 @@ Add to HTML `<head>` / Layout shell:
 ```css
 @font-face {
   font-family: 'Array-Semibold';
-  src: url('/fonts/Array-Semibold.woff2') format('woff2');
+  src: url('/fonts/Array-Semibold.woff2') format('woff2'); 
   font-weight: 600;
   font-display: swap;
   font-style: normal;
