@@ -17,10 +17,6 @@
 
 <br/>
 
-<p align="center">
-  <img src="assets/Calendar-Desktop-Example.png" alt="WhatDayIsIt Desktop Overview" width="920"/>
-</p>
-
 </div>
 
 ---
